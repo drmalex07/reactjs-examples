@@ -1,14 +1,12 @@
-module.exports = 
-{
-    VERSION: '0.1a',
-    
-    hello: function (name) 
-    {
-        console.log('Hello, ' + name);
-    },
+var moment = require('./moment-localized')
 
-    goodbye: function (name) 
-    {
-        console.log('Goodbye, ' + name);
-    },
-};
+var HelloMessage = React.createClass({
+  displayName: "HelloMessage",
+
+  render: function render() {
+    var text = "Hello from " + this.props.name + ", at " + moment().format(); 
+    return React.createElement("span", null, text);
+  }
+});
+
+module.exports = HelloMessage;

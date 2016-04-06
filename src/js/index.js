@@ -1,4 +1,2 @@
-moment = require('moment')
-greeter = require('./greeter')
-
+var greeter = require('./greeter')
 module.exports = greeter

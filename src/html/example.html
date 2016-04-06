@@ -8,7 +8,7 @@
   <script src="https://fb.me/react-dom-0.14.8.min.js"></script>
 
   <!-- Local -->
-  <script src="<%= pkg.name %>.min.js"></script> 
+  <script src="<%= pkg.name %>.js"></script> 
   <link rel="stylesheet" href="style.css"/>
 
   <style>
@@ -22,12 +22,18 @@
 <body>
 
    <div class="page container-fluid">
-      <h1>Hello ReactJS</h1>
+     <h1>Hello ReactJS</h1>
+     <div class="greeting"></div>
    </div>
-
 </body>
 
 <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    console.info('Loaded DOM: Kickstart React ...');
+    ReactDOM.render(
+      React.createElement(HelloMessage, {name: "John"}), 
+      document.querySelector('div.greeting'));
+  });
 </script>
 
 </html>

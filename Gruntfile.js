@@ -34,6 +34,15 @@ module.exports = function(grunt) {
     },
     
     browserify: {
+      options: {
+        exclude: [
+            'react',
+            'react-dom',
+        ],
+        transform: [
+            ['babelify'],
+        ],
+      },
       helloworld: {
         files: {
           'build/<%= pkg.name %>.js': ['src/js/main.js', 'src/js/greet.js'],
@@ -70,7 +79,7 @@ module.exports = function(grunt) {
             expand: true,
             filter: 'isFile',
             cwd: 'build/',
-            src: 'helloworld*.js',
+            src: 'hello-react*.js',
             dest: prefix,
           },
           {
