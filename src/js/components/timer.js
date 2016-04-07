@@ -1,3 +1,16 @@
+
+var Seconds = React.createClass({
+  displayName: 'Timer_Seconds',
+  
+  render: function () 
+  {
+    return React.createElement('span', null, 
+      React.createElement('tt', null, this.props.seconds.toFixed(0)),
+      's'
+    );
+  },
+});
+
 var Timer = React.createClass({
   displayName: "Timer",
  
@@ -11,7 +24,7 @@ var Timer = React.createClass({
   componentDidMount: function ()
   {
     console.info('A <Timer> component is mounted...');
-    this.tid = window.setInterval(this.tick.bind(this, 5.0), 5000);
+    this.tid = window.setInterval(this._tick.bind(this, 5.0), 5000);
     console.info('A <Timer> component has set a interval with tid=' + this.tid);
   },
 
@@ -27,16 +40,24 @@ var Timer = React.createClass({
     return React.createElement('p', null, 
       // Append children (text and element nodes),
       "Elapsed (since page load): ", 
-      React.createElement('tt', null, this.state.elapsed.toFixed(1)),
-      " seconds"
+      React.createElement(Seconds, {seconds: this.state.elapsed}),
+      ' ',
+      React.createElement('button', {
+        className: 'reset-btn', onClick: this._resetTimer}, 'Reset')
     );
   },
 
-  // Helpers
+  // Event handlers
 
-  tick: function (x)
+  _tick: function (x)
   {
     this.setState({elapsed: this.state.elapsed + x});
+  },
+
+  _resetTimer: function ()
+  {
+    console.info('A <Timer> is reset');
+    this.setState({elapsed: .0});
   },
 });
 
