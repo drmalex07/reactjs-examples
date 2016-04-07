@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   
   <!-- External dependencies -->
-  <script src="https://fb.me/react-0.14.8.min.js"></script>
-  <script src="https://fb.me/react-dom-0.14.8.min.js"></script>
+  <script src="https://fb.me/react-0.14.8.js"></script>
+  <script src="https://fb.me/react-dom-0.14.8.js"></script>
 
   <!-- Local -->
   <script src="<%= pkg.name %>.js"></script> 
@@ -23,16 +23,18 @@
 
    <div class="page container-fluid">
      <h1>Hello ReactJS</h1>
-     <div class="greeting"></div>
+     <div id="root"></div>
    </div>
 </body>
 
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function() {
-    console.info('Loaded DOM: Kickstart React ...');
+    
     ReactDOM.render(
-      React.createElement(HelloMessage, {name: "John"}), 
-      document.querySelector('div.greeting'));
+      React.createElement(Root, {name: "Λαλάκης"}), 
+      document.getElementById('root')
+    );
+
   });
 </script>
 

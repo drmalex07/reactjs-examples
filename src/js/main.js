@@ -1,1 +1,1 @@
-window.HelloMessage = require('./greeter');
+window.Root = require('./components/root.js');

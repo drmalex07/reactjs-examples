@@ -1,2 +1,1 @@
-var greeter = require('./greeter')
-module.exports = greeter
+module.exports = require('./components/root.js')

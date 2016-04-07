@@ -111,6 +111,7 @@ module.exports = function(grunt) {
       helloworld: {
          files: [
            'src/js/**.js',
+           'src/js/components/**.js',
            'src/html/**.html',
            'assets/style.css'
          ],
