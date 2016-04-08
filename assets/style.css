@@ -44,3 +44,7 @@
   font-family: monospace;
   font-size: 1.3em;
 }
+
+.timer .seconds.highlighted {
+  color: orange;  
+}
