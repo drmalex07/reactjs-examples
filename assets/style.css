@@ -36,3 +36,11 @@
     border-radius: 1px;
     border: solid 1px #ccc;
 }
+
+/* Timer Component */
+
+.timer .seconds { 
+  color: blue;
+  font-family: monospace;
+  font-size: 1.3em;
+}

@@ -4,7 +4,8 @@ var Seconds = React.createClass({
   
   render: function () 
   {
-    return React.createElement('span', null, 
+    return React.createElement('span', 
+      {className: 'seconds'}, 
       React.createElement('tt', null, this.props.seconds.toFixed(0)),
       's'
     );
@@ -37,7 +38,9 @@ var Timer = React.createClass({
   
   render: function ()
   {
-    return React.createElement('p', null, 
+    return React.createElement(
+      'div', 
+      {className: 'timer'}, 
       // Append children (text and element nodes),
       "Elapsed (since page load): ", 
       React.createElement(Seconds, {seconds: this.state.elapsed}),
