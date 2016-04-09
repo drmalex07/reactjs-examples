@@ -1,5 +1,9 @@
 var Greeter = React.createClass({
   displayName: "Greeter",
+  mixins: [
+    // This component should updated based on shallow equality of props+state
+    React.addons.PureRenderMixin, // http://facebook.github.io/react/docs/advanced-performance.html 
+  ],
   
   getDefaultProps: function ()
   {
@@ -8,6 +12,7 @@ var Greeter = React.createClass({
 
   render: function () 
   {
+    console.info('Rendering <Greeter name="'+this.props.name+'">')
     var text = "Hello, " + this.props.name; 
     return React.createElement("p", null, text);
   }

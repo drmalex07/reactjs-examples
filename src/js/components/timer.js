@@ -43,20 +43,20 @@ var Timer = React.createClass({
   
   componentDidMount: function ()
   {
-    console.info('A <Timer> component is mounted...');
+    console.info('Mounting <Timer>...');
+    // Set a periodic task, remember its task id (not part of state!)
     this.tid = window.setInterval(this._tick.bind(this, 1.0), 1e+3);
-    console.info('A <Timer> component has set a interval with tid=' + this.tid);
   },
 
   componentWillUnmount: function ()
   {
-    console.info('A <Timer> component will unmount...');
+    console.info('Unmounting <Timer>...');
     window.clearInterval(this.tid);
-    console.info('A <Timer> component cleared interval with tid=' + this.tid);
   },
   
   render: function ()
   {
+    console.info('Rendering <Timer>...');
     return React.createElement(
       'div', 
       {className: 'timer'}, 
@@ -92,7 +92,7 @@ var Timer = React.createClass({
 
   _resetTimer: function ()
   {
-    console.info('A <Timer> is reset');
+    console.info('About to reset timer for <Timer>...');
     // Update state, highlight once the new state is re-rendered
     this.setState({elapsed: .0}, this._highlight);
   },
