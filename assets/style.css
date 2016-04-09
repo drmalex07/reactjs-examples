@@ -37,6 +37,14 @@
     border: solid 1px #ccc;
 }
 
+.nav-pills > li > a {
+    border-radius: 1px;
+}
+
+.tab-content {
+   padding: 10px 0px;
+}
+
 /* Timer Component */
 
 .timer .seconds { 

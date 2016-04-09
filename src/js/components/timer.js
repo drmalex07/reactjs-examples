@@ -71,9 +71,10 @@ var Timer = React.createClass({
           ref: (c) => (this._seconds = c), // use lambda to preserve `this`
         }),
       ' ',
-      React.createElement('button', 
+      React.createElement(ReactBootstrap.Button, 
         {
-          className: 'reset-btn', 
+          bsStyle: 'warning', // bsStyle is a ReactBootstrap-specific property 
+          style: {verticalAlign: 'baseline'}, // normal inline style
           onClick: this._resetTimer,
           // The <Timer> will store a reference directly to the HTML DOM element,
           // since this element is not represented by a React component.
