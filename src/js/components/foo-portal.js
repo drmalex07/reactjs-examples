@@ -25,34 +25,34 @@ var FooPortal = React.createClass({
   {
     console.info('About to mount <FooPortal>...');
     if (!this.props.id)
-      this.props.id = this.props.prefix + '-' + randomString();
+      this._id = (this.props.id)? 
+        (this.props.id):
+        (this.props.prefix + '-' + randomString());
   },
 
   componentDidMount: function ()
   {
-    console.info('Mounted <FooPortal #' + this.props.id + '>');
+    console.info('Mounted <FooPortal #' + this._id + '>');
     // This DOM node is mounted, proceed to foo-specific initialization
     // independently of React's VDOM (e.g. initialize a jQuery widget, a
     // chart area etc.) 
     this._el = ReactDOM.findDOMNode(this);
-    this._initializeContainer();
+    this.initializeContainer();
   },
   
   componentWillUnmount: function ()
   {
     console.info('About to unmount <FooPortal>...')
     // Cleanup: destroy self-managed container
-    this._destroyContainer();
+    this.emptyContainer();
     this._el = null;
   },
 
   componentWillReceiveProps: function (nextProps)
   {
     console.info('Received new props for <FooPortal>')
-    if (!nextProps.id)
-      nextProps.id = this.props.id; // keep our id
     // Must handle updates here for our self-managed container
-    this._updateContainer(nextProps);
+    this.updateContainer(nextProps);
   },
 
   shouldComponentUpdate: function ()
@@ -64,7 +64,9 @@ var FooPortal = React.createClass({
   render: function ()
   {
     // Will only render the container (once!)
-    return (<div className={this.props.prefix + "-portal"} id={this.props.id}></div>);
+    return (
+      <div className={['portal', this.props.prefix].join(' ')} id={this._id}></div>
+    );
   },
 
   // Helpers
@@ -76,32 +78,30 @@ var FooPortal = React.createClass({
     );
   },
 
-  _initializeContainer: function ()
+  initializeContainer: function ()
   {
     var text1 = this._genMessage(this.props.name);
     this._el.appendChild(text1);
   },
 
-  _updateContainer: function (nextProps)
+  updateContainer: function (nextProps)
   { 
+    var el = this._el;
     if (this.props.name != nextProps.name) {
       // Replace the 1st text node
-      var el = this._el,
-          texts = Array.from(el.childNodes).filter((e) => (e.nodeType == document.TEXT_NODE)),
-          text1 = this._genMessage(nextProps.name);
-      
+      var texts = Array.from(el.childNodes).filter((e) => (e.nodeType == document.TEXT_NODE));
+      var text1 = this._genMessage(nextProps.name);
       console.assert(texts.length == 1, 'Expected 1 text node!');
-      
       el.removeChild(texts[0]);
       el.appendChild(text1);
     }
   },
 
-  _destroyContainer: function ()
+  emptyContainer: function ()
   {
     // Remove children of this container
     var el = this._el;
-    while(el.firstChild) {el.removeChild(el.firstChild);}
+    while (el.firstChild) {el.removeChild(el.firstChild);}
   },
 });
 
