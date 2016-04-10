@@ -30,26 +30,14 @@
 </body>
 
 <script type="text/javascript">
-  $root = null;
-
+  var $root = null;
   var renderRoot = function () { 
-    var h = window.location.hash;
     $root = ReactDOM.render(
-      React.createElement(Root, {name: h.substr(1)}),
-      document.getElementById('root')
+      React.createElement(Root, null), document.getElementById('root')
     );
   };
 
-  // Bind renderRoot to events
-
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!window.location.hash)
-      window.location.hash = 'World';
-    window.addEventListener("hashchange", renderRoot);
-    renderRoot();
-  });
-  
-  
+  document.addEventListener("DOMContentLoaded", renderRoot);
 </script>
 
 </html>
