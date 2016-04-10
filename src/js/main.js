@@ -1,1 +1,3 @@
-window.Root = require('./components/root.js');
+var Root = require('./components/root.js');
+
+window.Root = Root;

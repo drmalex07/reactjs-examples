@@ -40,11 +40,20 @@
 /* Timer Component */
 
 .timer .seconds { 
-  color: blue;
-  font-family: monospace;
-  font-size: 1.3em;
+    color: blue;
+    font-family: monospace;
+    font-size: 1.3em;
 }
 
 .timer .seconds.highlighted {
-  color: orange;  
+    color: orange;  
+}
+
+/* Portals */
+
+.foo-portal {
+    margin: 10px 0px;
+    padding: 5px 0px;
+    background-color: #dde;
+    border: solid 1px silver;
 }
