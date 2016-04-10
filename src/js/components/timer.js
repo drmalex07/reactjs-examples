@@ -41,9 +41,14 @@ var Timer = React.createClass({
     return {elapsed: 0};
   },
   
+  componentWillMount: function ()
+  {
+    console.info('About to mount <Timer>...'); 
+  },
+
   componentDidMount: function ()
   {
-    console.info('Mounting <Timer>...');
+    console.info('Mounted <Timer>');
     // Set a periodic task, remember its task id (not part of state!)
     this.tid = window.setInterval(this._tick.bind(this, 1.0), 1e+3);
   },
