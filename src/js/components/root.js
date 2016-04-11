@@ -1,6 +1,5 @@
-var Greeter = require('./greeter'),
-    Timer = require('./timer'),
-    FooPortal = require('./foo-portal.js');
+var Greeter = require('./greeter');
+var Counter = require('./counter');
 
 var Root = React.createClass({
 
@@ -16,11 +15,10 @@ var Root = React.createClass({
         <section id='sec-1'>
           <h3>Section #1</h3>
           <Greeter name={this.props.name} />
-          <Timer />
         </section>
         <section id='sec-2'>
           <h3>Section #2</h3>
-          <FooPortal name={this.props.name}/>
+          <Counter value={this.props.value} color={this.props.color}/>
         </section>
       </div>
     );

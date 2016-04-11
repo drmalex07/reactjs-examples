@@ -27,12 +27,15 @@
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "redux-devtools": "^3.2.0"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.12.0",
     "react": "^0.14.8",
-    "react-dom": "^0.14.8"
+    "react-dom": "^0.14.8",
+    "react-redux": "^4.4.2",
+    "redux": "^3.4.0"
   }
 }
