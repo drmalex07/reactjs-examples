@@ -1,6 +1,7 @@
-var Greeter = require('./greeter'),
-    Timer = require('./timer'),
-    FooPortal = require('./foo-portal.js');
+var Greeter = require('./greeter');
+var TodoList = require('./todo-list');
+var Timer = require('./timer');
+var FooPortal = require('./foo-portal');
 
 var Root = React.createClass({
 
@@ -21,6 +22,13 @@ var Root = React.createClass({
         <section id='sec-2'>
           <h3>Section #2</h3>
           <FooPortal name={this.props.name}/>
+        </section>
+        <section id='sec-3'>
+          <h3>Section #3</h3>
+          <TodoList todos={[
+            {id: 1, text: 'Clean house'},
+            {id: 2, text: 'Drink beer'},
+           ]}/>
         </section>
       </div>
     );

@@ -37,6 +37,14 @@
     border: solid 1px #ccc;
 }
 
+section:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+
+
 /* Timer Component */
 
 .timer .seconds { 
