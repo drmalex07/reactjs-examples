@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
   
-  var prefix = grunt.option('prefix') || 'deploy/';
+  var prefix = grunt.option('prefix') || 'public/www';
 
   // Project configuration.
   grunt.initConfig({
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       },
       helloworld: {
         src: [
-            'build/*', 'deploy/*',
+            'build/*', 'public/www/*',
         ],
       },
     },
