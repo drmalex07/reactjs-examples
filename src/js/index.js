@@ -1,10 +1,18 @@
+//var ReactRedux = require('react-redux');
+
 var Root = require('./components/root.js');
 var store = require('./store.js');
 
+var Provider = ReactRedux.Provider;
+
 var renderRoot = function (placeholder) 
 {
-  var props = store.getState();
-  ReactDOM.render(<Root {...props}/>, placeholder);
+  var root = (
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  );
+  ReactDOM.render(root, placeholder);
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 //var Redux = require('redux');
 
-var reduceColor = function (state='blue', action) 
+var reduceColor = function (state='#9a9a9a', action) 
 {
   switch (action.type) {
     case 'CHANGE_COLOR':

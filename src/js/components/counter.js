@@ -1,10 +1,9 @@
-var store = require('../store');
+//var ReactRedux = require('react-redux');
 
-var incr = () => (store.dispatch({type: 'INCR'}));
-var decr = () => (store.dispatch({type: 'DECR'}));
-var colorize = (color) => (
-  store.dispatch({type: 'CHANGE_COLOR', targetColor: color})
-);
+// See http://redux.js.org/docs/basics/UsageWithReact.html
+
+// Create a presentational component (rely only on props); 
+// This could also be a simple functional component (since it only defines render())
 
 var Counter = React.createClass({
   
@@ -12,6 +11,7 @@ var Counter = React.createClass({
 
   render: function ()
   {
+    console.info('Rendering <Counter value=' + this.props.value + '>...')
     return (
       <div className="counter">
         <div className="counter-value">
@@ -21,20 +21,40 @@ var Counter = React.createClass({
           </span>
         </div>
         <div className="counter-buttons">
-          <button onClick={incr}>Increment</button>
-          <button onClick={decr}>Decrement</button>
+          <button onClick={this.props.incr}>Increment</button>
+          <button onClick={this.props.decr}>Decrement</button>
           &nbsp;
-          Colorize (RGB):
+          Colorize:
           <input
             type="color"
+            defaultValue={this.props.color}
             ref={(c) => (this._colorInput = c)}
-            onChange={(ev) => (colorize(ev.target.value), false)}
-            maxlength="6" size="6"
+            onChange={(ev) => (this.props.colorize(ev.target.value), false)}
            />
         </div>
       </div>
     );  
   },
 });
+
+// Wrap into a container component (aware of Redux state)
+
+const mapStateToProps = (state, ownProps) => ({
+  value: state.value,
+  color: state.color, 
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  incr: () => (
+    dispatch({type: 'INCR'}), false),
+  decr: () => (
+    dispatch({type: 'DECR'}), false),
+  colorize: (color) => (
+    dispatch({type: 'CHANGE_COLOR', targetColor: color}), false),
+})
+
+Counter = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+// Export container
 
 module.exports = Counter;

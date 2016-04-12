@@ -20,8 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeState();
   // Render now
   renderRoot();
-  // Subscribe to future changes
-  _module.store.subscribe(renderRoot);
 });
 
 window.addEventListener('hashchange', function () {
