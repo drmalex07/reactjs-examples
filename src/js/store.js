@@ -1,4 +1,7 @@
 //var Redux = require('redux');
+var ReduxLogger = reduxLogger; //require('redux-logger');
+
+// Reducers
 
 var reduceColor = function (state='#9a9a9a', action) 
 {
@@ -39,10 +42,29 @@ var reduceName = function (state='World', action)
   }
 }
 
-var store = Redux.createStore(Redux.combineReducers({
+var rootReducer = Redux.combineReducers({
   color: reduceColor,
   value: reduceCounter,
   name: reduceName,
-}));
+});
+
+// Create and configure store
+
+var initialState = {
+  color: '#575A60',
+  value: 1,
+  name: 'SuperNova',
+};
+
+var middleware = [
+  ReduxLogger(),
+];
+
+var store = Redux.createStore(
+  rootReducer,
+  initialState,
+  Redux.applyMiddleware(...middleware));
+
+// Export
 
 module.exports = store;

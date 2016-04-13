@@ -1,4 +1,5 @@
 //var ReactRedux = require('react-redux');
+var actions = require('../actions')
 
 // See http://redux.js.org/docs/basics/UsageWithReact.html
 
@@ -46,11 +47,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   incr: () => (
-    dispatch({type: 'INCR'}), false),
+    dispatch(actions.incrCounter()), false),
   decr: () => (
-    dispatch({type: 'DECR'}), false),
+    dispatch(actions.decrCounter()), false),
   colorize: (color) => (
-    dispatch({type: 'CHANGE_COLOR', targetColor: color}), false),
+    dispatch(actions.changeColor(color)), false),
 })
 
 Counter = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Counter);
