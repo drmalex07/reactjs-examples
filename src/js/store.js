@@ -48,6 +48,34 @@ var rootReducer = Redux.combineReducers({
   name: reduceName,
 });
 
+// Define some custom middleware
+// see http://redux.js.org/docs/advanced/Middleware.html
+
+var makeLoggingMiddleware = function (options={level: 'log', prefix: 'before-and-after'}) 
+{
+  var log = (options.level == 'info')? console.info : console.log;
+  log = log.bind(console);
+  var prefix = 'redux/' + options.prefix;
+
+  // Decorate (wrap) dispatch method for a given store
+  return (store) => (
+    // next is the dispatch method defined by the previous middleware
+    // or the store itself (if no previous middleware exists)
+    (next) => (
+      // How should be an action be dispatched?
+      // Log state before and after; dispatch to previous in chain
+      (action) => {
+        var result;
+        console.group('[' + prefix + '] Received action: ', action);
+        log('Before: ', store.getState());
+        result = next(action);
+        log('After: ', store.getState());
+        console.groupEnd();
+      }
+    )
+  );
+}
+
 // Create and configure store
 
 var initialState = {
@@ -57,7 +85,8 @@ var initialState = {
 };
 
 var middleware = [
-  ReduxLogger(),
+  makeLoggingMiddleware(),
+  //ReduxLogger(),
 ];
 
 var store = Redux.createStore(
