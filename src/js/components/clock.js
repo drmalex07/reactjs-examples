@@ -1,4 +1,5 @@
 //var ReactRedux = require('react-redux');
+var actions = require('../actions');
 
 //
 // Define presentational components
@@ -92,19 +93,12 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  refresh: function ()
-  {
+  refresh: function () {
     // Fetch time from server's "Date" header
-    dispatch({type: 'ASK_TIME'});
+    dispatch(actions.askTime());
     fetch('/api/action/echo')
       .then(res => (new Date(res.headers.get('Date'))))
-      .then(function (res) {
-        dispatch({
-          type: 'SET_TIME',
-          time: (new Date()).getTime(), // roughly corresponds to server time
-          serverTime: res.getTime()
-        });
-      });
+      .then(res => (dispatch(actions.setTime(res, new Date()))));
   },
 })
 

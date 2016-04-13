@@ -2,9 +2,7 @@ var _module = require('./index');
 
 var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
-var actionForName = () => ({
-  type: 'CHANGE_NAME', name: window.location.hash.substr(1),
-});
+var actionForName = _module.actions.updateName;
 
 var initializeState = function ()
 {
