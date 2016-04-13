@@ -1,8 +1,12 @@
 var express = require('express');
+var logger = require('morgan')
 var reqparser = require('body-parser');
 var app = express();
 
+app.use(logger('combined'));
+
 app.use(express.static('public/www'));
+
 app.use(reqparser.json()); // for parsing application/json
 
 app.get('/', function (req, res) {
