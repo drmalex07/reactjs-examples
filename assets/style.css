@@ -37,6 +37,25 @@
     border: solid 1px #ccc;
 }
 
+section:after {
+  content: '';
+  display: block;
+  float: none;
+  clear: both;
+}
+
+button {
+  padding: 3px;
+  vertical-align: middle;
+}
+
+/* Clock component */
+
+.datestamp.error {
+  color: red;
+  font-style: oblique;
+}
+
 /* Counter Component */
 
 div.counter-buttons, 
@@ -49,17 +68,17 @@ div.counter-value {
   padding: 12px 5px 12px 0px;
 }
 
-div.counter-buttons button {
-  padding: 3px;
-  vertical-align: middle;
-}
-
 div.counter-value .value {
   font-family: monospace;
   font-size: 1.4em;
   padding: 0px 8px;
   margin: 0px 4px;
   border: solid 1px #ddd;
+}
+
+div.counter-buttons input {
+  padding: 4px 0px;
+  margin: 0px 3px;
 }
 
 /* Timer Component */

@@ -13,8 +13,12 @@ app.get('/', function (req, res) {
   res.redirect('/example.html');
 });
 
+app.get('/api/action/echo', function (req, res) {
+  res.json({message: (req.query.message || null) }); 
+});
+
 app.post('/api/action/echo', function (req, res) {
-  res.json({message: req.body.message});
+  res.json({message: (req.body.message || null) });
 });
 
 app.get('/api/action/get-state', function (req, res) {
@@ -22,6 +26,6 @@ app.get('/api/action/get-state', function (req, res) {
 });
 
 app.listen(3000, function () {
-  console.info('Browse http://localhost:3000'); 
+  console.info('Listening on 127.0.0.1:3000...'); 
 });
 

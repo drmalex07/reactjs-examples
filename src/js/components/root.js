@@ -1,5 +1,6 @@
 var Greeter = require('./greeter');
 var Counter = require('./counter');
+var Clock = require('./clock');
 
 var Root = React.createClass({
   
@@ -14,6 +15,10 @@ var Root = React.createClass({
         <section id='sec-2'>
           <h3>Section #2</h3>
           <Counter />
+        </section>
+        <section id='sec-3'>
+          <h3>Section #3</h3>
+          <Clock />
         </section>
       </div>
     );
