@@ -39,11 +39,15 @@
 
 section:after {
   content: '';
-  clear: both;
-  float: none;
   display: block;
+  float: none;
+  clear: both;
 }
 
+button {
+  padding: 3px;
+  vertical-align: middle;
+}
 
 /* Timer Component */
 
