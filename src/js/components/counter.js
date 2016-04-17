@@ -11,6 +11,7 @@ var Counter = React.createClass({
 
   render: function ()
   {
+    console.info('Rendering <Counter value=' + this.props.value + '>...')
     return (
       <div className="counter">
         <div className="counter-value">
@@ -23,12 +24,12 @@ var Counter = React.createClass({
           <button onClick={incr}>Increment</button>
           <button onClick={decr}>Decrement</button>
           &nbsp;
-          Colorize (RGB):
+          Colorize:
           <input
             type="color"
+            defaultValue={this.props.color}
             ref={(c) => (this._colorInput = c)}
             onChange={(ev) => (colorize(ev.target.value), false)}
-            maxlength="6" size="6"
            />
         </div>
       </div>

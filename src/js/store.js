@@ -1,6 +1,8 @@
 var Redux = global.Redux || require('redux');
 
-var reduceColor = function (state='blue', action) 
+// Reducers
+
+var reduceColor = function (state='#9a9a9a', action) 
 {
   switch (action.type) {
     case 'CHANGE_COLOR':
@@ -45,6 +47,16 @@ var rootReducer = Redux.combineReducers({
   name: reduceName,
 });
 
-var store = Redux.createStore(rootReducer);
+// Create and configure store
+
+var initialState = {
+  color: '#575A60',
+  value: 1,
+  name: 'SuperNova',
+};
+
+var store = Redux.createStore(rootReducer, initialState);
+
+// Export
 
 module.exports = store;
