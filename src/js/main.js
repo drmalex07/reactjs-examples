@@ -7,8 +7,6 @@ var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 document.addEventListener("DOMContentLoaded", function () {
   var rootEl = document.querySelector(rootSelector);
   var renderRoot = _module.renderRoot.bind(window, rootEl);
-  if (!window.location.hash)
-    window.location.hash = 'World';
   window.addEventListener("hashchange", renderRoot);
   renderRoot();
 });
