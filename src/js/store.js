@@ -1,4 +1,4 @@
-//var Redux = require('redux');
+var Redux = global.Redux || require('redux');
 
 var reduceColor = function (state='blue', action) 
 {
@@ -39,10 +39,12 @@ var reduceName = function (state='World', action)
   }
 }
 
-var store = Redux.createStore(Redux.combineReducers({
+var rootReducer = Redux.combineReducers({
   color: reduceColor,
   value: reduceCounter,
   name: reduceName,
-}));
+});
+
+var store = Redux.createStore(rootReducer);
 
 module.exports = store;

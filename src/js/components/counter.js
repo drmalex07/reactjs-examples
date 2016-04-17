@@ -1,10 +1,9 @@
 var store = require('../store');
+var actions = require('../actions');
 
-var incr = () => (store.dispatch({type: 'INCR'}));
-var decr = () => (store.dispatch({type: 'DECR'}));
-var colorize = (color) => (
-  store.dispatch({type: 'CHANGE_COLOR', targetColor: color})
-);
+var incr = () => (store.dispatch(actions.incrCounter()));
+var decr = () => (store.dispatch(actions.decrCounter()));
+var colorize = (color) => (store.dispatch(actions.changeColor(color)));
 
 var Counter = React.createClass({
   

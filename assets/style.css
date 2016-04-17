@@ -37,6 +37,13 @@
     border: solid 1px #ccc;
 }
 
+section:after {
+  content: '';
+  clear: both;
+  float: none;
+  display: block;
+}
+
 /* Counter Component */
 
 div.counter-buttons, 

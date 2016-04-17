@@ -1,4 +1,5 @@
 var Root = require('./components/root.js');
+var actions = require('./actions.js');
 var store = require('./store.js');
 
 var renderRoot = function (placeholder) 
@@ -7,8 +8,4 @@ var renderRoot = function (placeholder)
   ReactDOM.render(<Root {...props}/>, placeholder);
 };
 
-module.exports = {
-  Root: Root,
-  renderRoot: renderRoot,
-  store: store,
-}
+module.exports = {Root, renderRoot, store, actions}
