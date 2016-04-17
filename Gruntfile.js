@@ -19,38 +19,45 @@ module.exports = function(grunt) {
     
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! Package: <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       helloworld: {
         files: { 
           'build/<%= pkg.name %>.min.js': ['build/<%= pkg.name %>.js'],
         },
       },
-      moment: {
+      vendor: {
         files: {
-          'build/moment-localized.min.js': ['build/moment-localized.js'],
+          'build/vendor/util.min.js': ['build/vendor/util.js'],
+          'build/vendor/moment-localized.min.js': ['build/vendor/moment-localized.js'],
+          'build/vendor/react.min.js': ['build/vendor/react.js'],         
         },
       },
     },
     
     browserify: {
       options: {
-        exclude: [
-            'react',
-            'react-dom',
-        ],
         transform: [
             ['babelify'],
         ],
       },
       helloworld: {
+        options: {
+          // Exclude the modules below from being packaged into the main JS file:
+          // They will injected in global namespace with their own bundles (build/vendor/*.js).
+          exclude: [
+            'react', 'react-dom',
+          ]
+        },
         files: {
-          'build/<%= pkg.name %>.js': ['src/js/main.js', 'src/js/greet.js'],
+          'build/<%= pkg.name %>.js': ['src/js/main.js'],
         },
       },
-      moment: {
+      vendor: {
         files: {
-          'build/moment-localized.js': ['vendor/moment-localized.js'],
+          'build/vendor/util.js': ['vendor/js/util.js'],
+          'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
+          'build/vendor/react.js': ['vendor/js/react.js'],
         },
       },
     },
@@ -85,13 +92,6 @@ module.exports = function(grunt) {
           {
             expand: true,
             filter: 'isFile',
-            cwd: 'build/',
-            src: 'moment*.js',
-            dest: prefix,
-          },
-          {
-            expand: true,
-            filter: 'isFile',
             cwd: 'src/html/',
             src: '*.html',
             dest: prefix,
@@ -101,6 +101,17 @@ module.exports = function(grunt) {
             filter: 'isFile',
             cwd: 'assets/',
             src: '**',
+            dest: prefix,
+          },
+        ],
+      },
+      vendor: {
+        files: [ 
+          {
+            expand: true,
+            filter: 'isFile',
+            cwd: 'build/',
+            src: 'vendor/*.js',
             dest: prefix,
           },
         ],
@@ -115,7 +126,13 @@ module.exports = function(grunt) {
            'src/html/**.html',
            'assets/style.css'
          ],
-         tasks: ['build', 'deploy'],
+         tasks: ['build:helloworld', 'deploy:helloworld'],
+      },
+      vendor: {
+        files: [
+           'vendor/js/**.js', 
+        ],
+        tasks: ['build:vendor', 'deploy:vendor'],
       },
     },
   });
@@ -130,9 +147,13 @@ module.exports = function(grunt) {
 
   // Register new tasks
 
+  grunt.registerTask('build:helloworld', ['browserify:helloworld', 'uglify:helloworld']);
+  grunt.registerTask('build:vendor', ['browserify:vendor', 'uglify:vendor']);
   grunt.registerTask('build', ['browserify', 'uglify']);
   
-  grunt.registerTask('deploy', ['copy:helloworld']);  
+  grunt.registerTask('deploy:helloworld', ['copy:helloworld']);
+  grunt.registerTask('deploy:vendor', ['copy:vendor']);
+  grunt.registerTask('deploy', ['copy']);  
 
   grunt.registerTask('default', 'Greet', function () {
     console.log('Hello Grunt!');
