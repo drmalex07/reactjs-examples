@@ -30,8 +30,7 @@ module.exports = function(grunt) {
         files: {
           'build/vendor/util.min.js': ['build/vendor/util.js'],
           'build/vendor/moment-localized.min.js': ['build/vendor/moment-localized.js'],
-          'build/vendor/react.min.js': ['build/vendor/react.js'],         
-          'build/vendor/redux.min.js': ['build/vendor/redux.js'],         
+          'build/vendor/react-with-redux.min.js': ['build/vendor/react-with-redux.js'], 
         },
       },
     },
@@ -60,8 +59,7 @@ module.exports = function(grunt) {
         files: {
           'build/vendor/util.js': ['vendor/js/util.js'],
           'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
-          'build/vendor/react.js': ['vendor/js/react.js'],
-          'build/vendor/redux.js': ['vendor/js/redux.js'],
+          'build/vendor/react-with-redux.js': ['vendor/js/react-with-redux.js'],
         },
       },
     },
