@@ -1,4 +1,4 @@
-//var ReactRedux = require('react-redux');
+var ReactRedux = global.ReactRedux || require('react-redux');
 
 var Root = require('./components/root.js');
 var actions = require('./actions.js');
