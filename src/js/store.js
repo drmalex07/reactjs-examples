@@ -1,5 +1,5 @@
-//var Redux = require('redux');
-var ReduxLogger = reduxLogger; //require('redux-logger');
+var Redux = global.Redux || require('redux');
+var ReduxLogger = global.reduxLogger || require('redux-logger');
 
 // Reducers
 
