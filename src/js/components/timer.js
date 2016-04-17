@@ -1,3 +1,5 @@
+var React = global.React || require('react');
+var ReactBootstrap = global.ReactBootstrap || require('react-bootstrap');
 
 var Seconds = React.createClass({
   displayName: 'Timer_Seconds',

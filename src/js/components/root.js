@@ -1,8 +1,10 @@
+var React = global.React || require('react');
+var ReactBootstrap = global.ReactBootstrap || require('react-bootstrap');
+
 var Greeter = require('./greeter');
 var Timer = require('./timer');
 
-var Nav = ReactBootstrap.Nav,
-    NavItem = ReactBootstrap.NavItem;
+var Nav = ReactBootstrap.Nav, NavItem = ReactBootstrap.NavItem;
 
 var Root = React.createClass({
   displayName: "Root",

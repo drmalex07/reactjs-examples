@@ -1,5 +1,7 @@
+var React = global.React || require('react');
+
 var Greeter = React.createClass({
-  displayName: "Greeter",
+  
   mixins: [
     // This component should updated based on shallow equality of props+state
     React.addons.PureRenderMixin, // http://facebook.github.io/react/docs/advanced-performance.html 
