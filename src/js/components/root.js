@@ -1,6 +1,7 @@
-var Greeter = require('./greeter'),
-    Timer = require('./timer'),
-    FooPortal = require('./foo-portal.js');
+var Greeter = require('./greeter');
+var TodoList = require('./todo-list');
+var Timer = require('./timer');
+var FooPortal = require('./foo-portal');
 
 var Root = React.createClass({
 
@@ -55,6 +56,15 @@ var Root = React.createClass({
         pattern: /^timer$/,
         render: () => (
           <Timer />
+        ),
+      },
+      {
+        pattern: /^todos$/,
+        render: () => (
+          <TodoList todos={[
+            {id: 1, text: 'Clean house'},
+            {id: 2, text: 'Drink beer'},
+          ]}/>
         ),
       },
       // A catch-all route
