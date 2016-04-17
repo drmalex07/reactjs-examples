@@ -39,34 +39,14 @@
 
 section:after {
   content: '';
-  clear: both;
-  float: none;
   display: block;
+  float: none;
+  clear: both;
 }
 
-/* Counter Component */
-
-div.counter-buttons, 
-div.counter-value {
-  float: left;
-  padding: 10px 5px 10px 0px;
-}
-
-div.counter-value {
-  padding: 12px 5px 12px 0px;
-}
-
-div.counter-buttons button {
+button {
   padding: 3px;
   vertical-align: middle;
-}
-
-div.counter-value .value {
-  font-family: monospace;
-  font-size: 1.4em;
-  padding: 0px 8px;
-  margin: 0px 4px;
-  border: solid 1px #ddd;
 }
 
 /* Timer Component */
