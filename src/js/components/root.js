@@ -1,5 +1,5 @@
-var Greeter = require('./greeter'),
-    Timer = require('./timer');
+var Greeter = require('./greeter');
+var Timer = require('./timer');
 
 var Nav = ReactBootstrap.Nav,
     NavItem = ReactBootstrap.NavItem;

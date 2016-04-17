@@ -11,12 +11,12 @@ var Seconds = React.createClass({
 
   render: function () 
   {
-    return React.createElement('span', 
-      {
-        className: ((!this.state.highlighted)? 'seconds' : 'seconds highlighted'),
-      }, 
-      React.createElement('tt', null, this.props.seconds.toFixed(0)),
-      's'
+    var cls1 = 'seconds', 
+        cls2 = this.state.highlighted? 'highlighted' : '';
+    return (
+      <span className={[cls1, cls2].join(' ')}>
+        <tt>{this.props.seconds.toFixed(0)}</tt>s
+      </span>
     );
   },
 
@@ -42,7 +42,7 @@ var Timer = React.createClass({
   },
   
   componentWillMount: function ()
-  { 
+  {
     console.info('About to mount <Timer>...');
   },
 
@@ -62,30 +62,26 @@ var Timer = React.createClass({
   render: function ()
   {
     console.info('Rendering <Timer>...');
-    return React.createElement(
-      'div', 
-      {className: 'timer'}, 
-      // Append children (text and element nodes),
-      "Elapsed (since page load): ", 
-      React.createElement(
-        Seconds, 
-        {
-          seconds: this.state.elapsed,
+    return (
+      <div className={'timer'}>
+        Elapsed (since page load):
+        <Seconds 
+          seconds={this.state.elapsed}
           // The <Timer> will store a reference to this child component (as
           // soon as this is mounted to DOM).
-          ref: (c) => (this._seconds = c), // use lambda to preserve `this`
-        }),
-      ' ',
-      React.createElement(ReactBootstrap.Button, 
-        {
-          bsStyle: 'warning', // bsStyle is a ReactBootstrap-specific property 
-          style: {verticalAlign: 'baseline'}, // normal inline style
-          onClick: this._resetTimer,
+          ref={(c) => (this._seconds = c)}
+         />
+        &nbsp; 
+        <ReactBootstrap.Button 
+          className={'reset-btn'}
+          bsStyle='warning' // bsStyle is a ReactBootstrap-specific property
+          style={{verticalAlign: 'baseline'}} // normal inline style
+          onClick={this._resetTimer}
           // The <Timer> will store a reference directly to the HTML DOM element,
           // since this element is not represented by a React component.
-          ref: (c) => (this._button = c), // see above about lambda
-        }, 
-        'Reset')
+          ref={(c) => (this._button = c)}
+         >Reset</ReactBootstrap.Button>
+      </div>
     );
   },
 

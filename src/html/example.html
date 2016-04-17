@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   
   <!-- 
-    - External dependencies 
+    - External dependencies
    -->
-  
+
   <!-- React -->
   <script src="https://fb.me/react-with-addons-15.0.1.min.js"></script>
   <script src="https://fb.me/react-dom-15.0.1.min.js"></script>
@@ -37,19 +37,32 @@
 
    <div class="page container-fluid">
      <h1>Hello ReactJS</h1>
+     <p><small>Note: Change URL fragment to re-render!</small></p>
      <div id="root"></div>
    </div>
 </body>
 
 <script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function() {
-    
-    ReactDOM.render(
-      React.createElement(Root, {name: "Λαλάκης"}), 
+  $root = null;
+
+  var renderRoot = function () { 
+    var h = window.location.hash;
+    $root = ReactDOM.render(
+      React.createElement(Root, {name: h.substr(1)}),
       document.getElementById('root')
     );
+  };
 
+  // Bind renderRoot to events
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!window.location.hash)
+      window.location.hash = 'World';
+    window.addEventListener("hashchange", renderRoot);
+    renderRoot();
   });
+  
+  
 </script>
 
 </html>

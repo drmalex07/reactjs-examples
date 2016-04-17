@@ -14,7 +14,7 @@ var Greeter = React.createClass({
   {
     console.info('Rendering <Greeter name="'+this.props.name+'">')
     var text = "Hello, " + this.props.name; 
-    return React.createElement("p", null, text);
+    return (<p>{text}</p>);
   }
 });
 
