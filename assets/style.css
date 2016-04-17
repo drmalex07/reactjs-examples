@@ -39,17 +39,14 @@
 
 section:after {
   content: '';
-  clear: both;
-  float: none;
   display: block;
+  float: none;
+  clear: both;
 }
 
-.nav-pills > li > a {
-    border-radius: 1px;
-}
-
-.tab-content {
-   padding: 10px 0px;
+button {
+  padding: 3px;
+  vertical-align: middle;
 }
 
 /* Timer Component */
