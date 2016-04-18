@@ -1,3 +1,6 @@
+var React = global.React || require('react');
+var ReactDOM = global.ReactDOM || require('react-dom');
+
 var Root = require('./components/root.js');
 var actions = require('./actions.js');
 var store = require('./store.js');

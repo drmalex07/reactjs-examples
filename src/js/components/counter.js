@@ -1,3 +1,5 @@
+var React = global.React || require('react');
+
 var store = require('../store');
 var actions = require('../actions');
 
