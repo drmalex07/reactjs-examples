@@ -1,4 +1,4 @@
-//var ReactRedux = require('react-redux');
+var React = global.React || require('react');
 
 // Presentational component
 

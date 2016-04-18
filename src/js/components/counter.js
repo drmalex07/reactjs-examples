@@ -1,5 +1,7 @@
-//var ReactRedux = require('react-redux');
-var actions = require('../actions')
+var React = global.React || require('react');
+var ReactRedux = global.ReactRedux || require('react-redux');
+
+var actions = require('../actions');
 
 // See http://redux.js.org/docs/basics/UsageWithReact.html
 
