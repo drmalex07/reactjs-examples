@@ -1,106 +1,64 @@
 var React = global.React || require('react');
+var ReactRouter = global.ReactRouter || require('react-router');
+
+var {Router, Route, IndexRoute, Link, hashHistory} = ReactRouter;
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
-var FooPortal = require('./foo-portal');
+var Foo = require('./foo-portal');
 
 var Root = React.createClass({
-
-  // Lifecycle
-
+ 
   getInitialState: function ()
   {
-    return {routePath: 'greet/World'};
+    return {
+      todos: [
+        {id: 1, text: 'Clean house'},
+        {id: 2, text: 'Drink beer'},
+      ],
+    };
   },
- 
+  
   getDefaultProps: function ()
   {
-    return {fooPrefix: 'fooo'};
-  },
-
-  componentWillMount: function ()
-  {
-    var path = Root.getFragmentPath();
-    if (!path) {
-      Root.setFragmentPath(this.state.routePath);
-    } else {
-      this.setState({routePath: path});
-    }  
-  },
-
-  componentDidMount: function ()
-  {  
-    window.addEventListener("hashchange", (ev) => {
-      this.setState({routePath: Root.getFragmentPath()});
-    });
+    return {fooPrefix: 'Booooo'};
   },
 
   render: function ()
-  {
-    // A simple top-level router based on regex match
-   
-    // Note: Use arrow functions for referencing lexical `this`
-    var routes = [
-      {
-        pattern: /^foo\/(.*)$/,
-        render: (name) => (
-          <FooPortal name={name} prefix={this.props.fooPrefix} />
-        ),
-      },  
-      {
-        pattern: /^greet\/(.*)$/,
-        render: (name) => (
-          <Greeter name={name} />
-        ),
-      },
-      {
-        pattern: /^timer$/,
-        render: () => (
-          <Timer />
-        ),
-      },
-      {
-        pattern: /^todos$/,
-        render: () => (
-          <TodoList todos={[
-            {id: 1, text: 'Clean house'},
-            {id: 2, text: 'Drink beer'},
-          ]}/>
-        ),
-      },
-      // A catch-all route
-      {
-        pattern: /^.*$/,
-        render: () => (
-          <p>{'Cannot route to path!'}</p>
-        ),
-      }
-    ];
-    
-    // Match route and delegate to it
-    
-    var match = null;
-    for (var route of routes) {
-      match = route.pattern.exec(this.state.routePath);
-      if (match) {
-        return route.render.apply(this, match.slice(1));  
-      }
-    }
+  {   
+    // Note #1:
+    // Provide target components as functional components (also gives access to 
+    // lexical `this` holding <Root> instance).
+    // Note #2:
+    // The `params` prop passed to target components always contains matched 
+    // parameters from route!
+    return (
+      <Router history={hashHistory}>
+        <Route 
+          path="/"
+          component={() => (<p>About <i>something</i></p>)} 
+         />
+        <Route 
+          path="/foo/:name"
+          component={({params}) => (<Foo name={params.name} prefix={this.props.fooPrefix} />)}
+         />
+        <Route 
+          path="/greet/:name" 
+          component={({params}) => (<Greeter name={params.name} />)}
+         />
+        <Route 
+          path="/timer" 
+          component={() => (<Timer />)}
+         />
+        <Route 
+          path="/todos" 
+          component={() => (<TodoList todos={this.state.todos} />)}
+         />
+      </Router>
+    );
   },
 
-  // Helpers
-
-  statics: {
-    getFragmentPath: function ()
-    {
-      return window.location.hash.substr(1);
-    },
-    setFragmentPath: function (path)
-    {
-      return (window.location.hash = path);
-    },
-  },
 });
 
 module.exports = Root

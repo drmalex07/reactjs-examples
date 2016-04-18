@@ -6,7 +6,5 @@ var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
 document.addEventListener("DOMContentLoaded", function () {
   var rootEl = document.querySelector(rootSelector);
-  var renderRoot = _module.renderRoot.bind(window, rootEl);
-  window.addEventListener("hashchange", renderRoot);
-  renderRoot();
+  _module.renderRoot(rootEl);
 });
