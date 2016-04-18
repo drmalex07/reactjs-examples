@@ -1,3 +1,5 @@
+var React = global.React || require('react');
+var ReactDOM = global.ReactDOM || require('react-dom');
 var ReactRedux = global.ReactRedux || require('react-redux');
 
 var Root = require('./components/root.js');
