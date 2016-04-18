@@ -1,3 +1,5 @@
+var React = global.React || require('react');
+
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
