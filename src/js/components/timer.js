@@ -1,3 +1,4 @@
+var React = global.React || require('react');
 
 var Seconds = React.createClass({
   displayName: 'Timer_Seconds',
