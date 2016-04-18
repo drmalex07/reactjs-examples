@@ -1,3 +1,4 @@
+var React = global.React || require('react');
 
 // Note:
 // A portal is a component that represents a DOM subtree that we want 
