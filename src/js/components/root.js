@@ -4,32 +4,13 @@ var ReactBootstrap = global.ReactBootstrap || require('react-bootstrap');
 var Greeter = require('./greeter');
 var Timer = require('./timer');
 
-var Nav = ReactBootstrap.Nav, NavItem = ReactBootstrap.NavItem;
+var {Nav, NavItem, Tabs, Tab} = ReactBootstrap;
 
-var Root = React.createClass({
-  displayName: "Root",
-
-  // Lifecycle
+var SimpleTabs = React.createClass({
 
   getInitialState: function ()
   {
     return {activeKey: 'greeter'};
-  },
-
-  componentWillMount: function ()
-  {
-    console.info('About to mount <Root>')
-  },
-  
-  componentWillMount: function ()
-  {
-    console.info('Mounted <Root>')
-  },
-
-  componentWillUnmount: function ()
-  {
-    console.info('About to unmount <Root>')
-    // Cleanup
   },
   
   render: function ()
@@ -40,45 +21,43 @@ var Root = React.createClass({
     var tabs = new Map([
       [
         'timer',
-        React.createElement(Timer, null),
+        () => (<Timer />),
       ],
       [
         'lorem-ipsum',
-        React.createElement('p', null, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'),
+        () => (<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>),
       ],
       [
         'greeter',
-        React.createElement(Greeter, {name: this.props.name}),
+        () => (<Greeter name={this.props.name} />),
       ],
     ]);
-
-    var navtab = React.createElement(Nav, 
-      {
-        bsStyle: 'pills',
-        activeKey: this.state.activeKey,
-        onSelect: this._showPane,
-      },
-      React.createElement(NavItem, {eventKey: 'greeter'}, 'Greet'),
-      React.createElement(NavItem, {eventKey: 'timer'}, 'Timer'),
-      React.createElement(NavItem, {eventKey: 'lorem-ipsum'}, 'Lorem Ipsum')
+    
+    var navtab = (
+      <Nav
+        bsStyle="pills"
+        activeKey={this.state.activeKey} 
+        onSelect={(k) => (this.setState({activeKey: k}))}
+       >
+        <NavItem eventKey="greeter">{'Greet'}</NavItem>
+        <NavItem eventKey="timer">{'Timer'}</NavItem>
+        <NavItem eventKey="lorem-ipsum">{'Lorem Ipsum'}</NavItem>
+      </Nav>
     );
 
-    return React.createElement('div', null, 
-      navtab,
-      React.createElement('div', 
-        {className: 'tab-content'},
-        tabs.get(this.state.activeKey))
-    )
+    return (
+      <div>
+        {navtab}
+        <div className="tab-content">
+          {tabs.get(this.state.activeKey)()}
+        </div>
+      </div>
+    );
   },
-
-  // Event handlers
-
-  _showPane: function (key)
-  {
-    console.info('Switch to pane `' + key + '`...')
-    this.setState({activeKey: key});
-  },
-
 });
+
+// Export
+
+var Root = SimpleTabs;
 
 module.exports = Root
