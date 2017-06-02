@@ -1,30 +1,32 @@
-var React = global.React || require('react');
+var React = require('react');
 
 var Greeter = require('./greeter');
 var Counter = require('./counter');
 
-var Root = React.createClass({
-
-  getDefaultProps: function ()
-  {
-    return {name: 'World'};
-  },
+class Root extends React.Component {
   
-  render: function ()
+  render()
   {
     return (
       <div>
-        <section id='sec-1'>
+        
+        <section id='section-1'>
           <h3>Section #1</h3>
           <Greeter name={this.props.name} />
         </section>
-        <section id='sec-2'>
+        
+        <section id='section-2'>
           <h3>Section #2</h3>
           <Counter value={this.props.value} color={this.props.color}/>
         </section>
+        
       </div>
     );
   }
-});
+};
 
-module.exports = Root
+Root.defaultProps  = {
+  name: 'World',
+};
+
+module.exports = Root;

@@ -1,4 +1,4 @@
-var Redux = global.Redux || require('redux');
+const Redux = require('redux');
 
 // Reducers
 

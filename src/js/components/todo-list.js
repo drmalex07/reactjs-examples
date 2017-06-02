@@ -1,3 +1,4 @@
+var React = require('react');
 
 // An example component with dynamic children (generated via Array.map)
 // see http://facebook.github.io/react/docs/multiple-components.html#dynamic-children

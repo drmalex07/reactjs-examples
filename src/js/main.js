@@ -1,27 +1,26 @@
-var _module = require('./index');
+var {renderRoot} = require('./root');
+var store = require('./store');
+var actions = require('./actions');
 
 var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
-var actionForName = _module.actions.updateName;
-
-var initializeState = function ()
-{
-  _module.store.dispatch(actionForName());
-};
+var getName = () => window.location.hash.substr(1);
 
 // Bind top-level event handlers
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () 
+{
   var rootEl = document.querySelector(rootSelector);
-  var renderRoot = _module.renderRoot.bind(window, rootEl);
-  // Initialize central state
-  initializeState();
-  // Render now
-  renderRoot();
-  // Subscribe to future changes
-  _module.store.subscribe(renderRoot);
+  var _renderRoot = renderRoot.bind(window, rootEl);
+  
+  // Subscribe to any change from global state
+  store.subscribe(_renderRoot);
+  
+  // Push initial state to store
+  store.dispatch(actions.updateName(getName()));
 });
 
-window.addEventListener('hashchange', function () {
-  _module.store.dispatch(actionForName());
+window.addEventListener('hashchange', function () 
+{
+  store.dispatch(actions.updateName(getName()));
 });
