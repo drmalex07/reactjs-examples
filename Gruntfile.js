@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     
+    
     clean: {
       options: {
         force: true,
@@ -17,16 +18,17 @@ module.exports = function(grunt) {
       },
     },
     
+    
     uglify: {
       options: {
         banner: '/*! Package: <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
-      helloworld: {
+      'helloworld': {
         files: { 
           'build/<%= pkg.name %>.min.js': ['build/<%= pkg.name %>.js'],
         },
       },
-      vendor: {
+      'vendor': {
         files: {
           'build/vendor/util.min.js': ['build/vendor/util.js'],
           'build/vendor/moment-localized.min.js': ['build/vendor/moment-localized.js'],
@@ -34,18 +36,17 @@ module.exports = function(grunt) {
         },
       },
     },
-    
+   
+
     browserify: {
       options: {
-        transform: [
-            ['babelify'],
-        ],
+        /* moved to package.json */
       },
-      helloworld: {
+      'helloworld': {
         options: {
           // Exclude the modules below from being packaged into the main JS file:
-          // They will injected in global namespace with their own bundles (build/vendor/*.js).
-          exclude: [
+          // The following will be resolved globally (shim) or via earlier vendor includes
+          external: [
             'isomorphic-fetch', 'lodash', 'rgbcolor',
             'react', 'react-dom',
           ]
@@ -54,20 +55,44 @@ module.exports = function(grunt) {
           'build/<%= pkg.name %>.js': ['src/js/main.js'],
         },
       },
-      vendor: {
+      'vendor-util': {
+        options: {
+          alias: [
+            'isomorphic-fetch:fetch',
+            'lodash',
+            'rgbcolor',
+          ]
+        },
         files: {
-          'build/vendor/util.js': ['vendor/js/util.js'],
+          'build/vendor/util.js': []
+        },
+      },
+      'vendor-react': {
+        options: {
+          require: [
+            'react',
+            'react-dom',
+          ],
+        },
+        files: {
+          'build/vendor/react.js': [],
+        },
+      },
+      'vendor-moment': {
+        options: {
+        },
+        files: {
           'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
-          'build/vendor/react.js': ['vendor/js/react.js'],
         },
       },
     },
+
 
     copy: {
       options: {
         mode: '0644',
       },
-      helloworld: {
+      'helloworld': {
         options: {
           // Pre-process certain files (before copying)
           processContent: function (data, src) {
@@ -87,7 +112,7 @@ module.exports = function(grunt) {
             expand: true,
             filter: 'isFile',
             cwd: 'build/',
-            src: 'hello-react*.js',
+            src: '<%= pkg.name %>*.js',
             dest: prefix,
           },
           {
@@ -106,7 +131,7 @@ module.exports = function(grunt) {
           },
         ],
       },
-      vendor: {
+      'vendor': {
         files: [ 
           {
             expand: true,
@@ -119,8 +144,9 @@ module.exports = function(grunt) {
       },
     },
 
+
     watch: {
-      helloworld: {
+      'helloworld': {
          files: [
            'src/js/**.js',
            'src/js/components/**.js',
@@ -129,7 +155,7 @@ module.exports = function(grunt) {
          ],
          tasks: ['build:helloworld', 'deploy:helloworld'],
       },
-      vendor: {
+      'vendor': {
         files: [
            'vendor/js/**.js', 
         ],
@@ -137,6 +163,8 @@ module.exports = function(grunt) {
       },
     },
   });
+
+  // Load task modules
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -147,6 +175,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
 
   // Register new tasks
+
+  grunt.registerTask('browserify:vendor', [
+    'browserify:vendor-util', 'browserify:vendor-react', 'browserify:vendor-moment'
+  ]);
 
   grunt.registerTask('build:helloworld', ['browserify:helloworld', 'uglify:helloworld']);
   grunt.registerTask('build:vendor', ['browserify:vendor', 'uglify:vendor']);

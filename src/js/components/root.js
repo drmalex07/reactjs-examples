@@ -1,31 +1,29 @@
-var React = global.React || require('react');
+var React = require('react');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var FooPortal = require('./foo-portal');
 
-var Root = React.createClass({
-
-  getDefaultProps: function ()
-  {
-    return {name: 'World'};
-  },
+class Root extends React.Component {
   
-  render: function ()
+  render()
   {
     return (
       <div>
-        <section id='sec-1'>
+        
+        <section id='section-1'>
           <h3>Section #1</h3>
           <Greeter name={this.props.name} />
           <Timer />
         </section>
-        <section id='sec-2'>
+        
+        <section id='section-2'>
           <h3>Section #2</h3>
           <FooPortal name={this.props.name}/>
         </section>
-        <section id='sec-3'>
+        
+        <section id='section-3'>
           <h3>Section #3</h3>
           <TodoList todos={[
             {id: 1, text: 'Clean house'},
@@ -35,6 +33,10 @@ var Root = React.createClass({
       </div>
     );
   }
-});
+};
 
-module.exports = Root
+Root.defaultProps  = {
+  name: 'World',
+};
+
+module.exports = Root;
