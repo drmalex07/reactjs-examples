@@ -1,64 +1,70 @@
-var React = global.React || require('react');
-var ReactRouter = global.ReactRouter || require('react-router');
-
-var {Router, Route, IndexRoute, Link, hashHistory} = ReactRouter;
+const React = require('react');
+const {HashRouter, Route, Link, NavLink, IndexRoute} = require('react-router-dom');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var Foo = require('./foo-portal');
 
-var Root = React.createClass({
+class Root extends React.Component {
  
-  getInitialState: function ()
+  constructor(props)
   {
-    return {
+    super(props);
+    
+    this.state = {
       todos: [
         {id: 1, text: 'Clean house'},
         {id: 2, text: 'Drink beer'},
       ],
     };
-  },
+  }
   
-  getDefaultProps: function ()
-  {
-    return {fooPrefix: 'Booooo'};
-  },
-
-  render: function ()
+  render()
   {   
-    // Note #1:
+    // Note:
     // Provide target components as functional components (also gives access to 
     // lexical `this` holding <Root> instance).
-    // Note #2:
-    // The `params` prop passed to target components always contains matched 
+    
+    // Note:
+    // The `match` prop passed to a target component contains matched 
     // parameters from route!
+    
     return (
-      <Router history={hashHistory}>
-        <Route 
-          path="/"
-          component={() => (<p>About <i>something</i></p>)} 
-         />
-        <Route 
-          path="/foo/:name"
-          component={({params}) => (<Foo name={params.name} prefix={this.props.fooPrefix} />)}
-         />
-        <Route 
-          path="/greet/:name" 
-          component={({params}) => (<Greeter name={params.name} />)}
-         />
-        <Route 
-          path="/timer" 
-          component={() => (<Timer />)}
-         />
-        <Route 
-          path="/todos" 
-          component={() => (<TodoList todos={this.state.todos} />)}
-         />
-      </Router>
+      <HashRouter>
+        <div className="root"> {/* a router has a single skeletal child */}
+          
+          <ul className="menu">
+            <li><NavLink to="/todos">Todos</NavLink></li>
+            <li><NavLink to="/timer">Timer</NavLink></li>
+            <li><NavLink to="/greet/λαλακης">Greet!</NavLink></li>
+          </ul>
+       
+          <div className="content">
+            <Route exact={true} path="/"
+              component={() => (<p>About <i>something</i></p>)} 
+            />
+            <Route path="/foo/:name"
+              component={({match}) => (<Foo name={match.params.name} prefix={this.props.fooPrefix} />)}
+            />
+            <Route path="/greet/:name" 
+              component={({match}) => (<Greeter name={match.params.name} />)}
+            />
+            <Route path="/timer" 
+              component={() => (<Timer />)}
+            />
+            <Route path="/todos" 
+              component={() => (<TodoList todos={this.state.todos} />)}
+            />
+          </div>  
+        </div>
+      </HashRouter>
     );
-  },
+  }
+};
 
-});
+Root.defaultProps = {
+  fooPrefix: 'Foo',
+};
 
 module.exports = Root

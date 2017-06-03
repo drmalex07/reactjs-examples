@@ -1,4 +1,4 @@
-var _module = require('./index');
+var {renderRoot} = require('./root');
 
 var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
@@ -6,5 +6,5 @@ var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
 document.addEventListener("DOMContentLoaded", function () {
   var rootEl = document.querySelector(rootSelector);
-  _module.renderRoot(rootEl);
+  renderRoot(rootEl);
 });
