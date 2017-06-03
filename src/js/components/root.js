@@ -1,25 +1,19 @@
-var React = global.React || require('react');
+var React = require('react');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var FooPortal = require('./foo-portal');
 
-var Root = React.createClass({
+class Root extends React.Component {
 
-  // Lifecycle
-
-  getInitialState: function ()
+  constructor(props)
   {
-    return {routePath: 'greet/World'};
-  },
- 
-  getDefaultProps: function ()
-  {
-    return {fooPrefix: 'fooo'};
-  },
+    super(props);
+    this.state = {routePath: 'greet/World'};
+  }
 
-  componentWillMount: function ()
+  componentWillMount()
   {
     var path = Root.getFragmentPath();
     if (!path) {
@@ -27,20 +21,22 @@ var Root = React.createClass({
     } else {
       this.setState({routePath: path});
     }  
-  },
+  }
 
-  componentDidMount: function ()
+  componentDidMount()
   {  
+    // Listen to hashchange (ie route path) changes
     window.addEventListener("hashchange", (ev) => {
       this.setState({routePath: Root.getFragmentPath()});
     });
-  },
+  }
 
-  render: function ()
+  render()
   {
     // A simple top-level router based on regex match
    
-    // Note: Use arrow functions for referencing lexical `this`
+    // Note: Using arrow functions for referencing lexical `this`
+    
     var routes = [
       {
         pattern: /^foo\/(.*)$/,
@@ -87,20 +83,24 @@ var Root = React.createClass({
         return route.render.apply(this, match.slice(1));  
       }
     }
-  },
+  }
 
   // Helpers
 
-  statics: {
-    getFragmentPath: function ()
-    {
-      return window.location.hash.substr(1);
-    },
-    setFragmentPath: function (path)
-    {
-      return (window.location.hash = path);
-    },
-  },
-});
+  static getFragmentPath()
+  {
+    return window.location.hash.substr(1);
+  }
+  
+  static setFragmentPath(path)
+  {
+    return (window.location.hash = path);
+  }
+};
 
-module.exports = Root
+Root.defaultProps  = {
+  name: 'World',
+  fooPrefix: 'fooo',
+};
+
+module.exports = Root;

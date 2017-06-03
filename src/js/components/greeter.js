@@ -1,23 +1,25 @@
-var React = global.React || require('react');
+var React = require('react');
 
-var Greeter = React.createClass({
-  
-  mixins: [
-    // This component should updated based on shallow equality of props+state
-    React.addons.PureRenderMixin, // http://facebook.github.io/react/docs/advanced-performance.html 
-  ],
-  
-  getDefaultProps: function ()
-  {
-    return {name: "World"};
-  },
+// Note:
+// Extend React.PureComponent to update component based on shallow equality of props+state
 
-  render: function () 
+class Greeter extends React.PureComponent {
+  
+  constructor(props)
   {
-    console.info('Rendering <Greeter name="'+this.props.name+'">')
+    super(props);
+  }
+  
+  render() 
+  {
+    console.info('About to render <Greeter/>...');
     var text = "Hello, " + this.props.name; 
     return (<p>{text}</p>);
   }
-});
+}
+
+Greeter.defaultProps = {
+  name: 'World',
+};
 
 module.exports = Greeter;
