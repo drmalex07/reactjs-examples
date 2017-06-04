@@ -1,19 +1,20 @@
-var React = global.React || require('react');
-var ReactBootstrap = global.ReactBootstrap || require('react-bootstrap');
+var React = require('react');
+var {Nav, NavItem, Tabs, Tab} =  require('react-bootstrap');
 
 var Greeter = require('./greeter');
+var TodoList = require('./todo-list');
 var Timer = require('./timer');
+var FooPortal = require('./foo-portal');
 
-var {Nav, NavItem, Tabs, Tab} = ReactBootstrap;
-
-var SimpleTabs = React.createClass({
-
-  getInitialState: function ()
-  {
-    return {activeKey: 'greeter'};
-  },
+class Root extends React.Component {
   
-  render: function ()
+  constructor(props)
+  {
+    super(props);
+    this.state = {activeKey: 'greeter'};
+  } 
+
+  render()
   {
     // Note: This is only an example, the same result (tabs) could be better
     // achieved with https://react-bootstrap.github.io/components.html#tabs
@@ -33,31 +34,26 @@ var SimpleTabs = React.createClass({
       ],
     ]);
     
-    var navtab = (
-      <Nav
-        bsStyle="pills"
-        activeKey={this.state.activeKey} 
-        onSelect={(k) => (this.setState({activeKey: k}))}
-       >
-        <NavItem eventKey="greeter">{'Greet'}</NavItem>
-        <NavItem eventKey="timer">{'Timer'}</NavItem>
-        <NavItem eventKey="lorem-ipsum">{'Lorem Ipsum'}</NavItem>
-      </Nav>
-    );
-
     return (
       <div>
-        {navtab}
+        <Nav bsStyle="pills"
+          activeKey={this.state.activeKey} 
+          onSelect={(k) => (this.setState({activeKey: k}))}
+         >
+          <NavItem eventKey="greeter">{'Greet'}</NavItem>
+          <NavItem eventKey="timer">{'Timer'}</NavItem>
+          <NavItem eventKey="lorem-ipsum">{'Lorem Ipsum'}</NavItem>
+        </Nav>
         <div className="tab-content">
           {tabs.get(this.state.activeKey)()}
         </div>
       </div>
     );
-  },
-});
+  }
+};
 
-// Export
+Root.defaultProps  = {
+  name: 'World',
+};
 
-var Root = SimpleTabs;
-
-module.exports = Root
+module.exports = Root;
