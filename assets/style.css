@@ -2,6 +2,10 @@
  * Apply site-local style 
  */
 
+.content {
+  padding: 10px 0px;
+}
+
 .form-group input.form-control {
     border-radius: 1px;
     height: 32px;

@@ -1,89 +1,79 @@
-var React = global.React || require('react');
-var ReactRouter = global.ReactRouter || require('react-router');
-var ReactBootstrap = global.ReactBootstrap || require('react-bootstrap');
-
-var {Router, Route, IndexRoute, Link, hashHistory} = ReactRouter;
-var {Nav, NavItem} = ReactBootstrap;
+const React = require('react');
+const {HashRouter, Route, IndexRoute, Switch} = require('react-router-dom');
+const {Nav, NavItem} = require('react-bootstrap');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var Foo = require('./foo-portal');
 
-var RootMenu = React.createClass({
-  
-  render: function ()
-  {
-    return (
-      <div>
-        <Nav 
-          bsStyle='pills'
-          //activeHref={location.hash.split('?')[0]}
-          activeHref={'#' + this.props.location.pathname}
-         >
-          <NavItem href="#/greet/World">Welcome</NavItem>
-          <NavItem href="#/foo/Baz">Foo</NavItem>
-          <NavItem href="#/timer">Timer</NavItem>
-          <NavItem href="#/todos">Todos</NavItem>
-        </Nav>
-        {this.props.children}
-      </div>
-    );    
-  },
-}); 
+const RootMenu = ({location}) => (
+  <div>
+    <Nav bsStyle='pills' activeHref={'#' + location.pathname}>
+      <NavItem href="#/greet/World">Welcome</NavItem>
+      <NavItem href="#/foo/Baz">Foo</NavItem>
+      <NavItem href="#/timer">Timer</NavItem>
+      <NavItem href="#/todos">Todos</NavItem>
+    </Nav>
+  </div>
+); 
 
-var Root = React.createClass({
+class Root extends React.Component {
  
-  getInitialState: function ()
+  constructor(props)
   {
-    return {
+    super(props);
+    
+    this.state = {
       todos: [
         {id: 1, text: 'Clean house'},
         {id: 2, text: 'Drink beer'},
       ],
     };
-  },
+  }
   
-  getDefaultProps: function ()
-  {
-    return {fooPrefix: 'Booooo'};
-  },
-
-  render: function ()
+  render()
   {   
-    // Note #1:
+    // Note:
     // Provide target components as functional components (also gives access to 
     // lexical `this` holding <Root> instance).
-    // Note #2:
-    // The `params` prop passed to target components always contains matched 
+    
+    // Note:
+    // The `match` prop passed to a target component contains matched 
     // parameters from route!
+    
     return (
-      <Router history={hashHistory}>
-        <Route path="/" component={RootMenu}>
-          <IndexRoute
-            component={() => (<p>About <i>something</i></p>)} 
-           />
-          <Route 
-            path="foo/:name"
-            component={({params}) => (<Foo name={params.name} prefix={this.props.fooPrefix} />)}
-           />
-          <Route 
-            path="greet/:name" 
-            component={({params}) => (<Greeter name={params.name} />)}
-           />
-          <Route 
-            path="timer" 
-            component={() => (<Timer />)}
-           />
-          <Route 
-            path="todos" 
-            component={() => (<TodoList todos={this.state.todos} />)}
-           />
-        </Route>
-      </Router>
+      <HashRouter>
+        <div>
+          <Route path="/" component={RootMenu} />
+          
+          <div className="content"> 
+            <Switch> {/* match only 1st of following routes */}
+              <Route exact={true} path="/"
+                component={() => (<p>About <i>something</i></p>)} 
+              />
+              <Route path="/foo/:name"
+                component={({match}) => (<Foo name={match.params.name} prefix={this.props.fooPrefix} />)}
+              />
+              <Route path="/greet/:name" 
+                component={({match}) => (<Greeter name={match.params.name} />)}
+              />
+              <Route path="/timer" 
+                component={Timer}
+              />
+              <Route path="/todos" 
+                component={() => (<TodoList todos={this.state.todos} />)}
+              />
+            </Switch>
+          </div>
+        </div>
+      </HashRouter>
     );
-  },
+  }
+};
 
-});
+Root.defaultProps = {
+  fooPrefix: 'Foo',
+};
 
 module.exports = Root
