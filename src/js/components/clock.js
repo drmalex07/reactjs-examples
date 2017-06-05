@@ -1,5 +1,6 @@
-var React = global.React || require('react');
-var ReactRedux = global.ReactRedux || require('react-redux');
+const React = require('react');
+const ReactRedux = require('react-redux');
+const PropTypes = require('prop-types');
 
 var actions = require('../actions');
 
@@ -7,84 +8,80 @@ var actions = require('../actions');
 // Define presentational components
 //
 
-var Datestamp = ({t}) => (
+const Datestamp = ({t}) => (
   <span className={'datestamp' + (t? '' : ' error')}>
     {t? ((new Date(t)).toLocaleString()) : ('No time data!')}
   </span>
 );
 
 // A clock that synchronizes (on demand) with the server clock
-var Clock = React.createClass({
+class Clock extends React.Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      elapsed: 0, // seconds elapsed since last sync
+    };
+  }
   
-  propTypes: {
-    serverTime: React.PropTypes.number,
-    refresh: React.PropTypes.func.isRequired,
-  },
-
-  // Lifecycle
-
-  getInitialState: () => ({
-    elapsed: 0, // seconds elapsed since last sync
-  }),
-
-  componentDidMount: function ()
+  componentWillUnmount()
   {
-    // noop
-  },
-  
-  componentWillUnmount: function ()
-  {
-    this.stopTimer(); // stop timer, if started
-  },
+    this._stopTimer(); // stop timer, if started
+  }
 
-  componentWillReceiveProps: function (nextProps)
+  componentWillReceiveProps(nextProps)
   {
-    console.info('The <Clock> received new props:', nextProps); 
     if (nextProps.serverTime > this.props.serverTime) {
-      this.restartTimer();
+      this._restartTimer();
     }
-  },
+  }
 
-  render: function () 
+  render() 
   {
-    console.info('Rendering <Clock serverTime="' + this.props.serverTime + '">');
     return (
       <div className="clock">
-        <Datestamp t={this.currentTime()}/>&nbsp;&nbsp;
+        <Datestamp t={this._currentTime()}/>
+        &nbsp;&nbsp;
         <button onClick={(ev) => (this.props.refresh(), false)}>{'Sync now!'}</button>
       </div>
     );
-  },
+  }
 
   // Helpers
  
-  currentTime: function ()
+  _currentTime()
   {
     return (this.props.serverTime)? 
       (this.props.serverTime + this.state.elapsed): // millis since Epoch
-      (undefined);
-  },
+      undefined;
+  }
 
-  tick: function ()
+  _tick()
   {
     this.setState({elapsed: this.state.elapsed + 1e+3});
-  },
+  }
 
-  restartTimer: function ()
+  _restartTimer()
   {
-    this.stopTimer();
+    this._stopTimer();
     this.setState({elapsed: 0});
-    this.tid = setInterval(this.tick, 1e+3); 
-  },
+    this.tid = window.setInterval(this._tick.bind(this), 1e+3); 
+  }
 
-  stopTimer: function ()
+  _stopTimer()
   {
     if (this.tid) {
-      clearInterval(this.tid);
+      window.clearInterval(this.tid);
     }
     this.tid = null;
-  },
-});
+  }
+};
+
+Clock.propTypes = {
+  serverTime: PropTypes.number,
+  refresh: PropTypes.func.isRequired,
+};
 
 //
 // Wrap in a container component

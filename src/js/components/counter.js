@@ -1,20 +1,16 @@
-var React = global.React || require('react');
-var ReactRedux = global.ReactRedux || require('react-redux');
+const React = require('react');
+const ReactRedux = require('react-redux');
 
 var actions = require('../actions');
 
 // See http://redux.js.org/docs/basics/UsageWithReact.html
-
-// Create a presentational component (rely only on props); 
+// Define a presentational component (rely only on props); 
 // This could also be a simple functional component (since it only defines render())
 
-var Counter = React.createClass({
-  
-  // Lifecycle
-
-  render: function ()
+class Counter extends React.Component 
+{
+  render()
   {
-    console.info('Rendering <Counter value=' + this.props.value + '>...')
     return (
       <div className="counter">
         <div className="counter-value">
@@ -30,15 +26,14 @@ var Counter = React.createClass({
           Colorize:
           <input
             type="color"
-            defaultValue={this.props.color}
-            ref={(c) => (this._colorInput = c)}
+            value={this.props.color}
             onChange={(ev) => (this.props.colorize(ev.target.value), false)}
            />
         </div>
       </div>
     );  
-  },
-});
+  }
+};
 
 // Wrap into a container component (aware of Redux state)
 
@@ -59,5 +54,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 Counter = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 // Export container
-
 module.exports = Counter;

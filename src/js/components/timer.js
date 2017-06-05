@@ -1,109 +1,75 @@
-var React = global.React || require('react');
+const React = require('react');
 
-var Seconds = React.createClass({
-  displayName: 'Timer_Seconds',
-  
-  // Lifecycle
+const Seconds = ({seconds, highlighted}) => (
+  <span 
+    className={['seconds', highlighted? 'highlighted' : ''].join(' ')}>
+    <tt>{seconds.toFixed(0)}</tt>{'s'}
+  </span>
+);
 
-  getInitialState: function ()
+Seconds.displayName = 'Timer_Seconds';
+
+
+class Timer extends React.Component 
+{
+  constructor(props)
   {
-    return {highlighted: false};
-  },
-
-  render: function () 
-  {
-    var cls1 = 'seconds', 
-        cls2 = this.state.highlighted? 'highlighted' : '';
-    return (
-      <span className={[cls1, cls2].join(' ')}>
-        <tt>{this.props.seconds.toFixed(0)}</tt>s
-      </span>
-    );
-  },
-
-  // Custom methods
-
-  highlight: function (flag, duration)
-  {
-    this.setState({highlighted: flag});
-    if (duration)
-        window.setTimeout(this.highlight.bind(this, !flag, 0), duration);
-  },
+    super(props);
     
-});
+    this.state = {
+      elapsed: 0,
+      highlighted: false,
+    };
 
-var Timer = React.createClass({
-  displayName: "Timer",
- 
-  // Lifecycle
-
-  getInitialState: function ()
-  {
-    return {elapsed: 0};
-  },
+    this._resetTimer = this._resetTimer.bind(this);
+  }
   
-  componentWillMount: function ()
-  {
-    console.info('About to mount <Timer>...'); 
-  },
-
-  componentDidMount: function ()
+  componentDidMount()
   {
     console.info('Mounted <Timer>');
     // Set a periodic task, remember its task id (not part of state!)
     this.tid = window.setInterval(this._tick.bind(this, 1.0), 1e+3);
-  },
+  }
 
-  componentWillUnmount: function ()
+  componentWillUnmount()
   {
-    console.info('Unmounting <Timer>...');
     window.clearInterval(this.tid);
-  },
+  }
   
-  render: function ()
+  render()
   {
-    console.info('Rendering <Timer>...');
     return (
       <div className={'timer'}>
-        Elapsed (since page load):
+        {'Time elapsed (since page load):'}
         <Seconds 
-          seconds={this.state.elapsed}
-          // The <Timer> will store a reference to this child component (as
-          // soon as this is mounted to DOM).
-          ref={(c) => (this._seconds = c)}
-         />
+          seconds={this.state.elapsed} 
+          highlighted={this.state.highlighted}
+        />
         &nbsp; 
-        <button 
-          className={'reset-btn'}
-          onClick={this._resetTimer}
-          // The <Timer> will store a reference directly to the HTML DOM element,
-          // since this element is not represented by a React component.
-          ref={(c) => (this._button = c)}
-         >Reset</button>
+        <button className={'reset-btn'} onClick={this._resetTimer}>{'Reset'}</button>
       </div>
     );
-  },
+  }
 
   // Event handlers
 
-  _tick: function (x)
+  _tick(x)
   {
     this.setState({elapsed: this.state.elapsed + x});
-  },
-
-  _resetTimer: function ()
-  {
-    console.info('About to reset timer for <Timer>...');
-    // Update state, highlight once the new state is re-rendered
-    this.setState({elapsed: .0}, this._highlight);
-  },
-
-  _highlight: function ()
-  {
-    // We keep a reference (via `ref` special property used inside render())
-    // to our (subcomponent) seconds display.
-    this._seconds.highlight(true, 2e+3); // highlight for 2s
   }
-});
+
+  _resetTimer()
+  {
+    this.setState({elapsed: .0, highlighted: true});
+
+    // Highlight for only 2s
+    window.setTimeout(() => {
+      this.setState({highlighted: false});
+    }, 2 * 1e+3);
+  }
+
+};
+
+Timer.displayName = 'Timer';
 
 module.exports = Timer;

@@ -1,10 +1,7 @@
 
 var actions = {
 
-  updateName: () => ({
-    type: 'CHANGE_NAME',
-    name: window.location.hash.substr(1),
-  }),
+  updateName: (name) => ({type: 'CHANGE_NAME', name}),
   
   changeColor: (color) => ({type: 'CHANGE_COLOR', targetColor: color}),
   
