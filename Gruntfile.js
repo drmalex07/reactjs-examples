@@ -48,7 +48,7 @@ module.exports = function(grunt) {
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
             'isomorphic-fetch', 'lodash', 'rgbcolor',
-            'react', 'react-dom',
+            'react', 'react-dom', 'prop-types',
           ]
         },
         files: {
@@ -70,8 +70,7 @@ module.exports = function(grunt) {
       'vendor-react': {
         options: {
           require: [
-            'react',
-            'react-dom',
+            'react', 'react-dom', 'prop-types',
           ],
         },
         files: {
@@ -171,7 +170,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-browserify');
 
   // Register new tasks
