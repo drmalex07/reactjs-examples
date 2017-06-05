@@ -1,29 +1,31 @@
-var React = global.React || require('react');
+const React = require('react');
+const ReactRedux = require('react-redux');
 
-// Presentational component
+//
+// Define presentational component
+//
 
-var Greeter = React.createClass({
-
-  // Note: not needed, react-redux already checks for shallow equality 
-  //mixins: [
-  //  // This component should updated based on shallow equality of props+state
-  //  React.addons.PureRenderMixin, // http://facebook.github.io/react/docs/advanced-performance.html 
-  //],
+class Greeter extends React.PureComponent {
   
-  getDefaultProps: function ()
+  constructor(props)
   {
-    return {name: "World"};
-  },
+    super(props);
+  }
 
-  render: function () 
+  render() 
   {
-    console.info('Rendering <Greeter name="' + this.props.name + '">')
     var text = "Hello, " + this.props.name; 
     return (<p>{text}</p>);
   }
-});
+}
 
-// Container component
+Greeter.defaultProps = {
+  name: 'World',
+};
+
+//
+// Wrap into a container component
+//
 
 const mapStateToProps = (state, ownProps) => ({
   name: state.name,

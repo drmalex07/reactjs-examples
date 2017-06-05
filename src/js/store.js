@@ -1,7 +1,9 @@
-var Redux = global.Redux || require('redux');
-var ReduxLogger = global.reduxLogger || require('redux-logger');
+const Redux = require('redux');
+const ReduxLogger = require('redux-logger');
 
+//
 // Reducers
+//
 
 var reduceColor = function (state='#9a9a9a', action) 
 {
@@ -48,7 +50,9 @@ var rootReducer = Redux.combineReducers({
   name: reduceName,
 });
 
+//
 // Create and configure store
+//
 
 var initialState = {
   color: '#575A60',
@@ -57,7 +61,7 @@ var initialState = {
 };
 
 var middleware = [
-  ReduxLogger(),
+  ReduxLogger.createLogger(), /* logger must be last in chain! */
 ];
 
 var store = Redux.createStore(
