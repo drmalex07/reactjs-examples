@@ -1,8 +1,10 @@
-var Redux = global.Redux || require('redux');
-var ReduxLogger = global.reduxLogger || require('redux-logger');
-var ReduxThunk = global.ReduxThunk || require('redux-thunk');
+const Redux = require('redux');
+const ReduxLogger = require('redux-logger');
+const ReduxThunk = require('redux-thunk');
 
+//
 // Reducers
+//
 
 var reduceColor = function (state='#9a9a9a', action) 
 {
@@ -73,7 +75,9 @@ var rootReducer = Redux.combineReducers({
   receivedTime: reduceTimestamps,
 });
 
+//
 // Create and configure store
+//
 
 var initialState = {
   color: '#575A60',
@@ -86,8 +90,8 @@ var initialState = {
 };
 
 var middleware = [
-  ReduxThunk.default, // lets us dispatch() functions
-  ReduxLogger(),
+  ReduxThunk.default,  // lets us dispatch functions
+  ReduxLogger.default, // log actions, always last in middleware chain
 ];
 
 var store = Redux.createStore(
