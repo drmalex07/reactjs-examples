@@ -43,7 +43,7 @@ class Clock extends React.Component
       <div className="clock">
         <Datestamp t={this._currentTime()}/>
         &nbsp;&nbsp;
-        <button onClick={(ev) => (this.props.refresh(), false)}>{'Sync now!'}</button>
+        <button onClick={() => (this.props.refresh(), false)}>{'Sync now!'}</button>
       </div>
     );
   }
@@ -76,7 +76,7 @@ class Clock extends React.Component
     }
     this.tid = null;
   }
-};
+}
 
 Clock.propTypes = {
   serverTime: PropTypes.number,
@@ -93,7 +93,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => (dispatch(actions.refreshTime())),
-})
+});
 
 Clock = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Clock);
 
