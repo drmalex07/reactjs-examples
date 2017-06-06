@@ -33,7 +33,7 @@ class Counter extends React.Component
       </div>
     );  
   }
-};
+}
 
 // Wrap into a container component (aware of Redux state)
 
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(actions.decrCounter()), false),
   colorize: (color) => (
     dispatch(actions.changeColor(color)), false),
-})
+});
 
 Counter = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Counter);
 

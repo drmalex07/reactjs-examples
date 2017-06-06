@@ -1,9 +1,9 @@
-var React = require('react');
+const React = require('react');
 
 var Greeter = require('./greeter');
 var Counter = require('./counter');
 
-class Root extends React.Component 
+class Root extends React.Component
 {  
   render()
   {
@@ -21,6 +21,6 @@ class Root extends React.Component
       </div>
     );
   }
-};
+}
 
 module.exports = Root;
