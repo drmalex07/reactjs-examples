@@ -17,4 +17,4 @@ const TodoList = ({todos}) => (
   </div>
 );
 
-module.exports = TodoList
+module.exports = TodoList;

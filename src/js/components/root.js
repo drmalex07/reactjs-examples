@@ -1,12 +1,12 @@
-var React = require('react');
+const React = require('react');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var FooPortal = require('./foo-portal');
 
-class Root extends React.Component {
-
+class Root extends React.Component
+{
   constructor(props)
   {
     super(props);
@@ -75,7 +75,7 @@ class Root extends React.Component {
     ];
     
     // Match route and delegate to it
-    
+
     var match = null;
     for (var route of routes) {
       match = route.pattern.exec(this.state.routePath);
@@ -96,7 +96,7 @@ class Root extends React.Component {
   {
     return (window.location.hash = path);
   }
-};
+}
 
 Root.defaultProps  = {
   name: 'World',
