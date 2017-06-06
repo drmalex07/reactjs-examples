@@ -34,5 +34,6 @@ module.exports = {
         "no-unused-vars": [
             "warn", {"varsIgnorePattern": '(Greeter|[rR]eact)'}
         ],
+        "react/jsx-uses-vars": 2,
     }
 };
