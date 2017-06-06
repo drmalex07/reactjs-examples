@@ -1,5 +1,5 @@
 var express = require('express');
-var logger = require('morgan')
+var logger = require('morgan');
 var reqparser = require('body-parser');
 
 var app = express();
@@ -26,4 +26,4 @@ app.get('/api/action/get-state', function (req, res) {
   res.json({value: 0, name: 'Supernova', color: '#dedede'});
 });
 
-module.exports = app
+module.exports = app;

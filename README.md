@@ -1,7 +1,12 @@
-# reactjs-helloworld
+# reactjs-examples
+
 Examples with ReactJS Ui framework
 
 ## Quickstart 
+
+Install SASS globally to be used as CSS compiler:
+
+    sudo gem install sass
 
 Install Grunt locally (and use a symlink for convenience):
 

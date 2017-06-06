@@ -33,7 +33,7 @@ class Root extends React.Component {
   }
   
   render()
-  {   
+  {
     // Note:
     // Provide target components as functional components (also gives access to 
     // lexical `this` holding <Root> instance).
@@ -46,8 +46,8 @@ class Root extends React.Component {
       <HashRouter>
         <div>
           <Route path="/" component={RootMenu} />
-          
-          <div className="content"> 
+
+          <div className="content">
             <Switch> {/* match only 1st of following routes */}
               <Route exact={true} path="/"
                 component={() => (<p>About <i>something</i></p>)} 
@@ -70,10 +70,10 @@ class Root extends React.Component {
       </HashRouter>
     );
   }
-};
+}
 
 Root.defaultProps = {
   fooPrefix: 'Foo',
 };
 
-module.exports = Root
+module.exports = Root;
