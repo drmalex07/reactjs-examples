@@ -1,13 +1,13 @@
-var React = require('react');
-var {Nav, NavItem, Tabs, Tab} =  require('react-bootstrap');
+const React = require('react');
+const {Nav, NavItem, Tabs, Tab} =  require('react-bootstrap');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var FooPortal = require('./foo-portal');
 
-class Root extends React.Component {
-  
+class Root extends React.Component
+{
   constructor(props)
   {
     super(props);
@@ -50,7 +50,7 @@ class Root extends React.Component {
       </div>
     );
   }
-};
+}
 
 Root.defaultProps  = {
   name: 'World',
