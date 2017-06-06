@@ -197,7 +197,18 @@ module.exports = function(grunt) {
         tasks: ['build:vendor', 'deploy:vendor'],
       },
     },
-  });
+
+    
+    jsdoc: {
+      'helloworld': {
+        src: ['src/js/**/*.js', '!src/js/__tests__/*.js'],
+        options: {
+          destination: 'jsdoc',
+        }
+      },
+    },
+
+  }); /* initConfig */
 
 
   //
@@ -211,6 +222,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-eslint');
+  grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-browserify');
 
 
