@@ -37,7 +37,7 @@ class FooPortal extends React.Component
   
   componentWillUnmount()
   {
-    console.info('About to unmount <FooPortal>...')
+    //console.info('About to unmount <FooPortal>...')
     // Cleanup: destroy self-managed container
     this._emptyContainer();
     this._el = null;
@@ -45,7 +45,7 @@ class FooPortal extends React.Component
 
   componentWillReceiveProps(nextProps)
   {
-    console.info('Received new props for <FooPortal>')
+    //console.info('Received new props for <FooPortal>')
     // Must handle updates here for our self-managed container
     this._updateContainer(nextProps);
   }
@@ -105,7 +105,7 @@ class FooPortal extends React.Component
       el.removeChild(el.firstChild);
     }
   }
-};
+}
 
 FooPortal.propTypes = {
   id: PropTypes.string,

@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
   
-  var prefix = grunt.option('prefix') || 'public/www';
+  const prefix = grunt.option('prefix') || 'public/www';
+
+  const develop = process.env.NODE_ENV != 'production';
 
   // Project configuration.
   grunt.initConfig({
@@ -144,6 +146,19 @@ module.exports = function(grunt) {
     },
 
 
+    eslint: {
+      'helloworld': {
+        options: {
+          configFile: develop? '.eslintrc.develop.js' : '.eslintrc.js',
+        },
+        src: [
+          'src/js/**/*.js',
+          '!src/js/__tests__/**/*.js',
+        ],
+      },
+    },
+
+
     watch: {
       'helloworld': {
          files: [
@@ -170,6 +185,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-browserify');
 
   // Register new tasks
@@ -178,9 +194,17 @@ module.exports = function(grunt) {
     'browserify:vendor-util', 'browserify:vendor-react', 'browserify:vendor-moment'
   ]);
 
-  grunt.registerTask('build:helloworld', ['browserify:helloworld', 'uglify:helloworld']);
-  grunt.registerTask('build:vendor', ['browserify:vendor', 'uglify:vendor']);
-  grunt.registerTask('build', ['browserify', 'uglify']);
+  grunt.registerTask('build:helloworld', [
+    'browserify:helloworld', 'uglify:helloworld'
+  ]);
+  
+  grunt.registerTask('build:vendor', [
+    'browserify:vendor', 'uglify:vendor'
+  ]);
+  
+  grunt.registerTask('build', [
+    'eslint', 'browserify', 'uglify'
+  ]);
   
   grunt.registerTask('deploy:helloworld', ['copy:helloworld']);
   grunt.registerTask('deploy:vendor', ['copy:vendor']);

@@ -5,8 +5,8 @@ var TodoList = require('./todo-list');
 var Timer = require('./timer');
 var FooPortal = require('./foo-portal');
 
-class Root extends React.Component {
-  
+class Root extends React.Component
+{  
   render()
   {
     return (
@@ -26,14 +26,14 @@ class Root extends React.Component {
         <section id='section-3'>
           <h3>Section #3</h3>
           <TodoList todos={[
-            {id: 1, text: 'Clean house'},
-            {id: 2, text: 'Drink beer'},
-           ]}/>
+             {id: 1, text: 'Clean house'},
+             {id: 2, text: 'Drink beer'}]}
+           />
         </section>
       </div>
     );
   }
-};
+}
 
 Root.defaultProps  = {
   name: 'World',
