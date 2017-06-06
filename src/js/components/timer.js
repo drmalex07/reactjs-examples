@@ -27,7 +27,6 @@ class Timer extends React.Component
   
   componentDidMount()
   {
-    console.info('Mounted <Timer>');
     // Set a periodic task, remember its task id (not part of state!)
     this.tid = window.setInterval(this._tick.bind(this, 1.0), 1e+3);
   }
@@ -69,7 +68,7 @@ class Timer extends React.Component
     }, 2 * 1e+3);
   }
 
-};
+}
 
 Timer.displayName = 'Timer';
 

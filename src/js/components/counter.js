@@ -32,6 +32,6 @@ class Counter extends React.Component
       </div>
     );  
   }
-};
+}
 
 module.exports = Counter;
