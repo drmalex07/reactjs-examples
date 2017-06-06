@@ -40,25 +40,22 @@ var reduceName = function (state='World', action)
 var reduceTimestamps = function (state={}, action)
 {
   switch (action.type) {
-    case 'ASK_TIME':
-      return {
-        finished: false,
-        time: state.time,
-        serverTime: state.serverTime,
-      };
-      break;
-    case 'SET_TIME':
-      return {
-        finished: true,
-        time: action.time,
-        serverTime: action.serverTime,
-      };
-      break;
-    default:
-      return state;
-      break;
+  case 'ASK_TIME':
+    return {
+      finished: false,
+      time: state.time,
+      serverTime: state.serverTime,
+    };
+  case 'SET_TIME':
+    return {
+      finished: true,
+      time: action.time,
+      serverTime: action.serverTime,
+    };
+  default:
+    return state;
   }
-}
+};
 
 var rootReducer = Redux.combineReducers({
   color: reduceColor,
@@ -82,7 +79,7 @@ var initialState = {
 };
 
 var middleware = [
-  ReduxLogger.createLogger(), /* logger must be last in chain! */
+  ReduxLogger.default, /* logger must be last in chain! */
 ];
 
 var store = Redux.createStore(
