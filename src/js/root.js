@@ -14,4 +14,4 @@ var renderRoot = function (placeholder)
     placeholder);
 };
 
-module.exports = {renderRoot};
+module.exports = {renderRoot, Root};
