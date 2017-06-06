@@ -92,7 +92,7 @@ module.exports = function(grunt) {
     sass: {
       'helloworld': {
         options: {
-          style: 'expanded',
+          style: develop? 'expanded' : 'compressed',
         },
         files: {
           'build/style.css': ['assets/style.scss'], 
