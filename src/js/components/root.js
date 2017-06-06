@@ -4,18 +4,20 @@ const {HashRouter, Route, Switch, Link, NavLink, IndexRoute} = require('react-ro
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
 var Timer = require('./timer');
-var Foo = require('./foo-portal');
 
 const RootMenu = ({location}) => {
   var links = [
     {
-      path: "/todos", title: "Todos",
+      path: "/todos", 
+      title: "Todos",
     }, 
     {
-      path: "/timer", title: "Timer",
+      path: "/timer", 
+      title: "Timer",
     }, 
     {
-      path: "/greet/λαλακης", title: "Greet!",
+      path: "/greet/λαλακης", 
+      title: "Greet!",
     },
   ];
   return (
@@ -46,7 +48,7 @@ class Root extends React.Component {
   }
   
   render()
-  {   
+  {
     // Note:
     // Provide target components as functional components (also gives access to 
     // lexical `this` holding <Root> instance).
@@ -84,10 +86,10 @@ class Root extends React.Component {
       </HashRouter>
     );
   }
-};
+}
 
 Root.defaultProps = {
   fooPrefix: 'Foo',
 };
 
-module.exports = Root
+module.exports = Root;

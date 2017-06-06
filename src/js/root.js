@@ -8,4 +8,4 @@ var renderRoot = function (placeholder)
   ReactDOM.render(<Root/>, placeholder);
 };
 
-module.exports = {renderRoot};
+module.exports = {renderRoot, Root};
