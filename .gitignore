@@ -5,3 +5,4 @@ dist
 node_modules
 scratch.js
 public/www
+.sass-cache

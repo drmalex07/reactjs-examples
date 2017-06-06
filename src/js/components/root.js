@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 
 var Greeter = require('./greeter');
 var TodoList = require('./todo-list');
@@ -11,7 +11,6 @@ class Root extends React.Component
   {
     return (
       <div>
-        
         <section id='section-1'>
           <h3>Section #1</h3>
           <Greeter name={this.props.name} />

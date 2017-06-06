@@ -89,25 +89,41 @@ module.exports = function(grunt) {
     },
 
 
+    sass: {
+      'helloworld': {
+        options: {
+          style: 'expanded',
+        },
+        files: {
+          'build/style.css': ['assets/style.scss'], 
+        },
+      },
+    },
+
+
     copy: {
       options: {
         mode: '0644',
       },
-      'helloworld': {
-        options: {
+      'helloworld-markup': {
+         options: {
           // Pre-process certain files (before copying)
           processContent: function (data, src) {
             console.log(' **1* Pre-processing ' + src +' ...')
             return grunt.template.process(data)
           },
-          processContentExclude: [
-            'build/*.js',
-            'build/*.min.js',
-            'assets/*.css',
-            'assets/fonts/**'
-          ],
         },
-        // Define what is to be copied
+        files: [
+          {
+            expand: true,
+            filter: 'isFile',
+            cwd: 'src/html/',
+            src: '*.html',
+            dest: prefix,
+          }, 
+        ],
+      },
+      'helloworld-scripts': {
         files: [
           {
             expand: true,
@@ -116,23 +132,27 @@ module.exports = function(grunt) {
             src: '<%= pkg.name %>*.js',
             dest: prefix,
           },
+        ],
+      },
+      'helloworld-stylesheets': { 
+        files: [
           {
             expand: true,
             filter: 'isFile',
-            cwd: 'src/html/',
-            src: '*.html',
+            cwd: 'build/',
+            src: '*.css',
             dest: prefix,
           },
           {
             expand: true,
             filter: 'isFile',
-            cwd: 'assets/',
+            cwd: 'assets/fonts/',
             src: '**',
-            dest: prefix,
+            dest: prefix + "/fonts",
           },
         ],
       },
-      'vendor': {
+      'vendor-scripts': {
         files: [ 
           {
             expand: true,
@@ -160,42 +180,50 @@ module.exports = function(grunt) {
 
 
     watch: {
-      'helloworld': {
-         files: [
-           'src/js/**.js',
-           'src/js/components/**.js',
-           'src/html/**.html',
-           'assets/style.css'
-         ],
-         tasks: ['build:helloworld', 'deploy:helloworld'],
+      'helloworld-scripts': {
+         files: ['src/js/**/*.js'],
+         tasks: ['build:helloworld', 'copy:helloworld-scripts'],
+      },
+      'helloworld-markup': {
+        files: ['src/html/**.html'],
+        tasks: ['copy:helloworld-markup'],
+      },
+      'helloworld-stylesheets': {
+        files: ['assets/**.scss'],
+        tasks: ['sass:helloworld', 'copy:helloworld-stylesheets'],
       },
       'vendor': {
-        files: [
-           'vendor/js/**.js', 
-        ],
+        files: ['vendor/js/**.js'],
         tasks: ['build:vendor', 'deploy:vendor'],
       },
     },
   });
 
+
+  //
   // Load task modules
+  //
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-browserify');
 
+
+  //
   // Register new tasks
+  //
 
   grunt.registerTask('browserify:vendor', [
     'browserify:vendor-util', 'browserify:vendor-react', 'browserify:vendor-moment'
   ]);
 
   grunt.registerTask('build:helloworld', [
-    'browserify:helloworld', 'uglify:helloworld'
+    'sass:helloworld', 'eslint:helloworld', 'browserify:helloworld', 'uglify:helloworld'
   ]);
   
   grunt.registerTask('build:vendor', [
@@ -203,15 +231,17 @@ module.exports = function(grunt) {
   ]);
   
   grunt.registerTask('build', [
-    'eslint', 'browserify', 'uglify'
+    'sass', 'eslint', 'browserify', 'uglify'
   ]);
   
-  grunt.registerTask('deploy:helloworld', ['copy:helloworld']);
-  grunt.registerTask('deploy:vendor', ['copy:vendor']);
+  grunt.registerTask('deploy:helloworld', [
+    'copy:helloworld-markup', 'copy:helloworld-scripts', 'copy:helloworld-stylesheets',
+  ]);
+  grunt.registerTask('deploy:vendor', ['copy:vendor-scripts']);
   grunt.registerTask('deploy', ['copy']);  
 
   grunt.registerTask('default', 'Greet', function () {
     console.log('Hello Grunt!');
   });
-  
+
 };
