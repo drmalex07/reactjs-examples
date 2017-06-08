@@ -1,42 +1,106 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const { NavLink } = require('react-router-dom');
+const Immutable = require('immutable');
 
 class Sidebar extends React.Component
 {
-  handleClick(e) {
-    e.preventDefault();
-    e.target.parentElement.classList.toggle('open');
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      expanded: new Immutable.Set(),
+    };
   }
 
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? 
-      'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
-  }
+  render() 
+  {
+    var {location} = this.props;
+    
+    var expanded = (p) => (
+      location.pathname.indexOf(p) >= 0 || this.state.expanded.has(p)
+    );
 
-  secondLevelActive(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? 
-      "nav nav-second-level collapse in" : "nav nav-second-level collapse";
-  }
+    var toggle = (p) => {
+      var s = this.state.expanded;
+      this.setState({expanded: s.has(p)? s.remove(p) : s.add(p)});
+    };
 
-  render() {
     return (
-
       <div className="sidebar">
         <nav className="sidebar-nav">
           <ul className="nav">
+
+            <li className="nav-title">{'Admin'}</li>
+            
             <li className="nav-item">
-              <NavLink to={'/greet'} className="nav-link" activeClassName="active">
-                <i className="fa fa-life-saver"></i>{'Greet!'}
-              </NavLink>
               <NavLink to={'/dashboard'} className="nav-link" activeClassName="active">
                 <i className="fa fa-dashboard"></i>{'Dashboard'}
               </NavLink>
             </li>
+            
+            <li className="nav-item">
+              <NavLink to={'/scheduler'} className="nav-link" activeClassName="active">
+                <i className="fa fa-gears"></i>{'Scheduler'}
+              </NavLink>
+            </li>
+          
+            <li className={'nav-item nav-dropdown ' + (expanded('/examples')? 'open' : '')}>
+              <a className="nav-link nav-dropdown-toggle" href="#" onClick={() => (toggle('/examples'), false)}>
+                {'Examples'}
+              </a>
+              <ul className="nav-dropdown-items">
+                <li className="nav-item">
+                  <NavLink to={'/examples/buttons'} className="nav-link" activeClassName="active">
+                    <i className="fa fa-puzzle-piece"></i>{'Buttons'}
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to={'/examples/tables'} className="nav-link" activeClassName="active">
+                    <i className="fa fa-puzzle-piece"></i>{'Tables'}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            
+            <li className={'nav-item nav-dropdown ' + (expanded('/pages')? 'open' : '')}>
+              <a className="nav-link nav-dropdown-toggle" href="#" onClick={() => (toggle('/pages'), false)}>
+                {'Pages'}
+              </a>
+              <ul className="nav-dropdown-items">
+                <li className="nav-item">
+                  <NavLink to={'/pages/login'} className="nav-link" activeClassName="active">
+                    <i className="fa fa-file-text-o"></i>{'Login'}
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to={'/pages/register'} className="nav-link" activeClassName="active">
+                    <i className="fa fa-file-text-o"></i>{'Register'}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+
+            <li className="nav-title">{'About'}</li>
+
+            <li className="nav-item">
+              <NavLink to={'/greet'} className="nav-link" activeClassName="active">
+                <i className="fa fa-life-saver"></i>{'Greet!'}
+              </NavLink>
+            </li>
+            
+
           </ul>
         </nav>
       </div>
     );
   }
 }
+
+Sidebar.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
+};
 
 module.exports = Sidebar;

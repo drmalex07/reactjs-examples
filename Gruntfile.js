@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'isomorphic-fetch', 'lodash', 'rgbcolor', 'history',
+            'isomorphic-fetch', 'lodash', 'immutable', 'rgbcolor', 'history',
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
             'reactstrap', 'react-transition-group',
           ]
@@ -63,6 +63,7 @@ module.exports = function(grunt) {
           alias: [
             'isomorphic-fetch:fetch',
             'lodash',
+            'immutable',
             'rgbcolor',
             'history',
           ]

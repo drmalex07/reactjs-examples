@@ -23,7 +23,7 @@ class Root extends React.Component
         <div className="app">
           <Header />
           <div className="app-body">
-            <Sidebar {...this.props}/>
+            <Route path="/" component={Sidebar} />
             <main className="main">
               <Route path="/" component={Breadcrumb} />
               <div className="container-fluid">
