@@ -2,59 +2,35 @@ const React = require('react');
 const { Route, Link } = require('react-router-dom');
 const { Breadcrumb, BreadcrumbItem } = require('reactstrap');
 
+const routeInfo = require('../../route-info');
 
-// Fixme: no central configuration for routes
-const routes = require('../../routes');
-const findRouteName = (url) => routes[url];
+const MAX_LENGTH = 3; // maximum number of parts for a breadcrumb
 
-const getPaths = (pathname) => {
-  const paths = ['/'];
+module.exports = ({location, match}) => 
+{
+  var paths = location.pathname.split('/')
+    .slice(1, 1 + MAX_LENGTH)
+    .reduce((res, part) => {
+      if (part.length > 0) {
+        var prevPath = res.length > 0? res[res.length - 1] : "";
+        res.push(prevPath + (prevPath.endsWith("/")? "" : "/") + part);
+      }
+      return res;
+    }, ["/"]);
 
-  if (pathname === '/') return paths;
-
-  pathname.split('/').reduce((prev, curr, index) => {
-    const currPath = `${prev}/${curr}`;
-    paths.push(currPath);
-    return currPath;
-  });
-  console.log(paths);
-  return paths;
-};
-
-const BreadcrumbsItem = ({match}) => {
-  var routeName = findRouteName(match.url);
-  if (routeName) {
-    return (
-      match.isExact ?
-      (
-        <BreadcrumbItem active>{routeName}</BreadcrumbItem>
-      ) :
-      (
-        <BreadcrumbItem>
-          <Link to={match.url || ''}>
-            {routeName}
-          </Link>
-        </BreadcrumbItem>
-      )
-    );
-  }
-  return null;
-};
-
-const Breadcrumbs = ({location: {pathname}, match}) => {
-  var paths = getPaths(pathname);
-  var items = paths.map((path, i) => 
-    (<Route key={i} path={path} component={BreadcrumbsItem} />));
   return (
     <Breadcrumb>
-      {items}
+      {paths
+        .map((path, i) => {
+          var active = location.pathname == path;
+          var r = routeInfo.get(path);
+          return r == null? null : (
+            <BreadcrumbItem key={path} active={active}>
+              {active? r.title : (<Link to={path}>{r.title}</Link>)}
+            </BreadcrumbItem>
+          );
+        })
+      }
     </Breadcrumb>
   );
 };
-
-
-module.exports = (props) => (
-  <div>
-    <Route path="/:path" component={Breadcrumbs} {...props} />
-  </div>
-);

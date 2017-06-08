@@ -10,8 +10,10 @@ const Footer = require('./layout/footer');
 
 const Dashboard = require('./views/dashboard');
 const Greeter = require('./views/greeter');
+const routeInfo = require('../route-info');
 
 const history = createBrowserHistory();
+
 
 class Root extends React.Component 
 {
@@ -23,12 +25,11 @@ class Root extends React.Component
           <div className="app-body">
             <Sidebar {...this.props}/>
             <main className="main">
-              {/* Fixme <Breadcrumb />*/}
+              <Route path="/" component={Breadcrumb} />
               <div className="container-fluid">
                 <Switch>
-                  <Route path="/greet" name="Greeter" component={Greeter}/>
-                  <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
-                  <Redirect from="/" to="/dashboard"/>
+                  <Route path="/greet" name={routeInfo.get('/greet').title} component={Greeter}/>
+                  <Route path="/dashboard" name={routeInfo.get('/dashboard').title} component={Dashboard}/>
                 </Switch>
               </div>
             </main>

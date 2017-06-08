@@ -49,8 +49,9 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'isomorphic-fetch', 'lodash', 'rgbcolor',
-            'react', 'react-dom', 'prop-types', 'react-router-dom', 'reactstrap', 'react-transition-group',
+            'isomorphic-fetch', 'lodash', 'rgbcolor', 'history',
+            'react', 'react-dom', 'prop-types', 'react-router-dom', 
+            'reactstrap', 'react-transition-group',
           ]
         },
         files: {
@@ -63,6 +64,7 @@ module.exports = function(grunt) {
             'isomorphic-fetch:fetch',
             'lodash',
             'rgbcolor',
+            'history',
           ]
         },
         files: {
@@ -75,7 +77,8 @@ module.exports = function(grunt) {
             'tether:reactstrap-tether',
           ],
           require: [
-            'react', 'react-dom', 'prop-types', 'react-router-dom', 'reactstrap', 'react-transition-group',
+            'react', 'react-dom', 'prop-types', 'react-router-dom', 
+            'reactstrap', 'react-transition-group',
           ],
         },
         files: {
