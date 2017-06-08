@@ -50,7 +50,7 @@ module.exports = function(grunt) {
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
             'isomorphic-fetch', 'lodash', 'rgbcolor',
-            'react', 'react-dom', 'prop-types',
+            'react', 'react-dom', 'prop-types', 'react-router-dom', 'reactstrap', 'react-transition-group',
           ]
         },
         files: {
@@ -71,8 +71,11 @@ module.exports = function(grunt) {
       },
       'vendor-react': {
         options: {
+          alias: [
+            'tether:reactstrap-tether',
+          ],
           require: [
-            'react', 'react-dom', 'prop-types',
+            'react', 'react-dom', 'prop-types', 'react-router-dom', 'reactstrap', 'react-transition-group',
           ],
         },
         files: {
@@ -83,7 +86,7 @@ module.exports = function(grunt) {
         options: {
         },
         files: {
-          'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
+          'build/vendor/moment-localized.js': ['src/js/moment-localized.js'],
         },
       },
     },
@@ -146,13 +149,20 @@ module.exports = function(grunt) {
           {
             expand: true,
             filter: 'isFile',
-            cwd: 'assets/fonts/',
-            src: '**',
-            dest: prefix + "/fonts",
+            cwd: 'assets/',
+            src: '**/*.png',
+            dest: prefix,
+          },          
+          {
+            expand: true,
+            filter: 'isFile',
+            cwd: 'assets/',
+            src: 'fonts/*',
+            dest: prefix,
           },
         ],
       },
-      'vendor-scripts': {
+      'vendor': {
         files: [ 
           {
             expand: true,
@@ -161,6 +171,13 @@ module.exports = function(grunt) {
             src: 'vendor/*.js',
             dest: prefix,
           },
+          {
+            expand: true,
+            filter: 'isFile',
+            cwd: '.',
+            src: 'vendor/coreui/**/*',
+            dest: prefix,
+          }
         ],
       },
     },
@@ -193,7 +210,7 @@ module.exports = function(grunt) {
         tasks: ['sass:helloworld', 'copy:helloworld-stylesheets'],
       },
       'vendor': {
-        files: ['vendor/js/**.js'],
+        files: ['vendor/**/*'],
         tasks: ['build:vendor', 'deploy:vendor'],
       },
     },
@@ -249,7 +266,7 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy:helloworld', [
     'copy:helloworld-markup', 'copy:helloworld-scripts', 'copy:helloworld-stylesheets',
   ]);
-  grunt.registerTask('deploy:vendor', ['copy:vendor-scripts']);
+  grunt.registerTask('deploy:vendor', ['copy:vendor']);
   grunt.registerTask('deploy', ['copy']);  
 
   grunt.registerTask('default', 'Greet', function () {

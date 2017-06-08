@@ -1,41 +1,44 @@
 const React = require('react');
+const { HashRouter, Link, Switch, Route, Redirect } = require('react-router-dom');
+const { createBrowserHistory } = require('history');
 
-var Greeter = require('./greeter');
-var TodoList = require('./todo-list');
-var Timer = require('./timer');
-var FooPortal = require('./foo-portal');
+const Header = require('./layout/header');
+const Sidebar = require('./layout/sidebar');
+const Breadcrumb = require('./layout/breadcrumb');
+const Aside = require('./layout/aside');
+const Footer = require('./layout/footer');
 
-class Root extends React.Component
-{  
-  render()
-  {
+const Dashboard = require('./views/dashboard');
+const Greeter = require('./views/greeter');
+
+const history = createBrowserHistory();
+
+class Root extends React.Component 
+{
+  render() {
     return (
-      <div>
-        <section id='section-1'>
-          <h3>Section #1</h3>
-          <Greeter name={this.props.name} />
-          <Timer />
-        </section>
-        
-        <section id='section-2'>
-          <h3>Section #2</h3>
-          <FooPortal name={this.props.name}/>
-        </section>
-        
-        <section id='section-3'>
-          <h3>Section #3</h3>
-          <TodoList todos={[
-             {id: 1, text: 'Clean house'},
-             {id: 2, text: 'Drink beer'}]}
-           />
-        </section>
-      </div>
+      <HashRouter history={history}>
+        <div className="app">
+          <Header />
+          <div className="app-body">
+            <Sidebar {...this.props}/>
+            <main className="main">
+              {/* Fixme <Breadcrumb />*/}
+              <div className="container-fluid">
+                <Switch>
+                  <Route path="/greet" name="Greeter" component={Greeter}/>
+                  <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
+                  <Redirect from="/" to="/dashboard"/>
+                </Switch>
+              </div>
+            </main>
+            <Aside />
+          </div>
+          <Footer />
+        </div>
+      </HashRouter>
     );
   }
 }
-
-Root.defaultProps  = {
-  name: 'World',
-};
 
 module.exports = Root;
