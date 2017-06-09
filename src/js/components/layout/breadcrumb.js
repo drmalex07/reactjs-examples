@@ -20,17 +20,15 @@ module.exports = ({location, match}) =>
 
   return (
     <Breadcrumb>
-      {paths
-        .map((path, i) => {
-          var active = location.pathname == path;
-          var r = routeInfo.get(path);
-          return r == null? null : (
-            <BreadcrumbItem key={path} active={active}>
-              {active? r.title : (<Link to={path}>{r.title}</Link>)}
-            </BreadcrumbItem>
-          );
-        })
-      }
+      {paths.map((path) => {
+        var active = location.pathname == path;
+        var r = routeInfo.get(path);
+        return r == null? null : (
+          <BreadcrumbItem key={path} active={active}>
+            {active? r.title : (<Link to={path}>{r.title}</Link>)}
+          </BreadcrumbItem>
+        );
+      })}
     </Breadcrumb>
   );
 };
