@@ -67,7 +67,7 @@ class Header extends React.Component
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this._toggleDropdown}>
               <button onClick={this._toggleDropdown} className="nav-link dropdown-toggle" data-toggle="dropdown" type="button" 
                   aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'img/avatar.jpg'} className="img-avatar" alt="admin@example.com"/>
+                <img src={'https://github.com/identicons/drmalex07.png'} className="img-avatar" alt="admin@example.com"/>
                 <span className="d-md-down-none">admin</span>
               </button>
               <DropdownMenu className="dropdown-menu-right">
