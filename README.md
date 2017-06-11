@@ -2,7 +2,7 @@
 
 Examples with ReactJS Ui framework
 
-## Quickstart 
+## Build
 
 Install SASS globally to be used as CSS compiler:
 
@@ -17,15 +17,12 @@ Install all project dependencies:
 
     npm install
 
-Run a task (e.g. the 'build' composite task):
+Build, copy to target folder (by default is `public/www`), and watch for changes:
 
-    grunt build
+    grunt build deploy watch
 
-Run a composite task with command-line options
+## Serve the example application
 
-    grunt deploy --prefix ~/var/www/helloworld
+Start express server:
 
-Watch sources for change, and fire appropriate tasks (see `watch` configuration):
-
-    grunt watch:helloworld --prefix ~/var/www/helloworld
-
+    npm start
