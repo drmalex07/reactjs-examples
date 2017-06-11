@@ -30,8 +30,12 @@ module.exports = {
         ],
         "no-console": "off",
         "no-unused-vars": [
-            "warn", {"varsIgnorePattern": '(Greeter|[rR]eact)'}
+            "warn", {
+              "args": "after-used",
+              "varsIgnorePattern": '(React)'
+            }
         ],
         "react/jsx-uses-vars": 2,
+        "no-class-assign": 0, /* allow higher-order-components */
     }
 };
