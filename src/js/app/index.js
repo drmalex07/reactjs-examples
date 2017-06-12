@@ -22,13 +22,13 @@ module.exports = function makeApp(conf)
 
   app.use(logger('combined'));
   
+  const sessionOpts = require('./configure-session')(session, conf.session);
+  app.use(session(sessionOpts));
+  
   conf.docRoot.forEach((p) => {
     app.use(express.static(p, {maxAge: '1d'})); // serve static content
   });
 
-  const sessionOpts = require('./configure-session')(session, conf.session);
-  app.use(session(sessionOpts));
-  
   app.use(bodyParser.json()); // parse application/json
   app.use(bodyParser.urlencoded({extended: true})); // parse application/x-www-form-urlencoded
  
