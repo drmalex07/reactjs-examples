@@ -1,11 +1,12 @@
 const React = require('react');
-const {HashRouter, Route, IndexRoute, Switch} = require('react-router-dom');
+const {HashRouter, Route, Switch, Link, NavLink} = require('react-router-dom');
 const {Nav, NavItem} = require('react-bootstrap');
 
-var Greeter = require('./greeter');
-var TodoList = require('./todo-list');
-var Timer = require('./timer');
-var Foo = require('./foo-portal');
+const history = require('../history');
+
+const Greeter = require('./greeter');
+const TodoList = require('./todo-list');
+const Timer = require('./timer');
 
 const RootMenu = ({location}) => (
   <div>
@@ -42,28 +43,20 @@ class Root extends React.Component {
     // The `match` prop passed to a target component contains matched 
     // parameters from route!
     
+    var Foo1 = ({match}) => (<Foo name={match.params.name} prefix={this.props.fooPrefix} />);
+
     return (
-      <HashRouter>
+      <HashRouter history={history}>
         <div>
           <Route path="/" component={RootMenu} />
 
           <div className="content">
             <Switch> {/* match only 1st of following routes */}
-              <Route exact={true} path="/"
-                component={() => (<p>About <i>something</i></p>)} 
-              />
-              <Route path="/foo/:name"
-                component={({match}) => (<Foo name={match.params.name} prefix={this.props.fooPrefix} />)}
-              />
-              <Route path="/greet/:name" 
-                component={({match}) => (<Greeter name={match.params.name} />)}
-              />
-              <Route path="/timer" 
-                component={Timer}
-              />
-              <Route path="/todos" 
-                component={() => (<TodoList todos={this.state.todos} />)}
-              />
+              <Route exact={true} path="/" component={() => (<p>About <i>something</i></p>)} />
+              <Route path="/foo/:name" component={Foo1} />
+              <Route path="/greet/:name" component={({match}) => (<Greeter name={match.params.name} />)} />
+              <Route path="/timer" component={Timer} />
+              <Route path="/todos" component={() => (<TodoList todos={this.state.todos} />)} />
             </Switch>
           </div>
         </div>
