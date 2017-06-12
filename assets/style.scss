@@ -4,12 +4,28 @@
 
 $font: sans-serif;
 
+$border-radius: 1px;
+
 body {
     font-family: $font;
 }
 
+ul.menu {
+  list-style: none;
+  padding: 12px 0px;
+  border: solid 1px silver;
+  border-width: 1px 0px;
 
-$border-radius: 1px;
+  li {
+    display: inline;
+    padding: 5px;
+  }
+
+  li.active {
+    background-color: #ccc;
+  }
+
+}
 
 .form-group {
  

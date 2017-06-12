@@ -49,8 +49,9 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'isomorphic-fetch', 'lodash', 'rgbcolor',
+            'isomorphic-fetch', 'lodash', 'rgbcolor', 'history', 'immutable',
             'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
+            'react-router-dom', 'react-router-redux',
           ]
         },
         files: {
@@ -62,6 +63,8 @@ module.exports = function(grunt) {
           alias: [
             'isomorphic-fetch:fetch',
             'lodash',
+            'immutable',
+            'history',
             'rgbcolor',
           ]
         },
@@ -73,6 +76,7 @@ module.exports = function(grunt) {
         options: {
           require: [
             'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
+            'react-router-dom', 'react-router-redux',
           ],
         },
         files: {

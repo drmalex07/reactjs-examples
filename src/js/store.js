@@ -1,51 +1,23 @@
 const Redux = require('redux');
 const ReduxLogger = require('redux-logger');
+const {routerMiddleware}  = require('react-router-redux');
 
-//
-// Reducers
-//
+const {reduceColor, reduceCounter, reduceName} = require('./reducers');
 
-var reduceColor = function (state='#9a9a9a', action) 
-{
-  switch (action.type) {
-  case 'CHANGE_COLOR':
-    return action.targetColor;
-  default:
-    return state;     
-  }
-};
+const history = require('./history');
 
-var reduceCounter = function (state=0, action)
-{
-  switch (action.type) {
-  case 'INCR':
-    return state + 1;
-  case 'DECR':
-    return state - 1;
-  default:
-    return state;
-  }
-};
-
-var reduceName = function (state='World', action)
-{
-  switch (action.type) {
-  case 'CHANGE_NAME':
-    return action.name;
-  default:
-    return state;
-  }
-};
-
-var rootReducer = Redux.combineReducers({
-  color: reduceColor,
-  value: reduceCounter,
-  name: reduceName,
-});
+/* global process */
+const env = process.env.NODE_ENV || 'development';
 
 //
 // Create and configure store
 //
+
+const rootReducer = Redux.combineReducers({
+  color: reduceColor,
+  value: reduceCounter,
+  name: reduceName,
+});
 
 var initialState = {
   color: '#575A60',
@@ -54,14 +26,16 @@ var initialState = {
 };
 
 var middleware = [
-  ReduxLogger.createLogger(), /* logger must be last in chain! */
+  routerMiddleware(history), // intercept navigation actions
 ];
 
-var store = Redux.createStore(
-  rootReducer,
-  initialState,
-  Redux.applyMiddleware(...middleware));
+if (env == 'development') {
+  // The logger middleware should always be last
+  middleware.push(ReduxLogger.default);
+}
 
-// Export
+var store = Redux.createStore(
+  rootReducer, initialState, Redux.applyMiddleware(...middleware)
+);
 
 module.exports = store;

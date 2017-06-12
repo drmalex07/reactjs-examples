@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom');
 const ReactRedux = require('react-redux');
 
 const store = require('./store.js');
+
 const Root = require('./components/root.js');
 
 var renderRoot = function (placeholder) 
