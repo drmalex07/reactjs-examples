@@ -14,9 +14,7 @@ module.exports = function(grunt) {
         force: true,
       },
       helloworld: {
-        src: [
-            'build/*', 'public/www/*',
-        ],
+        src: ['build/*', 'public/www/*'],
       },
     },
     
@@ -34,7 +32,7 @@ module.exports = function(grunt) {
         files: {
           'build/vendor/util.min.js': ['build/vendor/util.js'],
           'build/vendor/moment-localized.min.js': ['build/vendor/moment-localized.js'],
-          'build/vendor/react.min.js': ['build/vendor/react.js'],         
+          'build/vendor/react-with-redux.min.js': ['build/vendor/react-with-redux.js'],         
         },
       },
     },
@@ -49,8 +47,9 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'isomorphic-fetch', 'lodash', 'immutable', 'rgbcolor', 'history',
+            'fetch', 'lodash', 'immutable', 'rgbcolor', 'history', 'sprintf', 'url-search-params',
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
+            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 
             'reactstrap', 'react-transition-group',
           ]
         },
@@ -62,10 +61,12 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'isomorphic-fetch:fetch',
+            'url-search-params',
             'lodash',
+            'history',
             'immutable',
             'rgbcolor',
-            'history',
+            'sprintf',
           ]
         },
         files: {
@@ -79,11 +80,12 @@ module.exports = function(grunt) {
           ],
           require: [
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
+            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 
             'reactstrap', 'react-transition-group',
           ],
         },
         files: {
-          'build/vendor/react.js': [],
+          'build/vendor/react-with-redux.js': [],
         },
       },
       'vendor-moment': {

@@ -1,0 +1,13 @@
+/* Timer Component */
+
+.timer { 
+    .seconds { 
+        color: blue;
+        font-family: monospace;
+        font-size: 1.3em;
+    }
+    .seconds.highlighted {
+        color: orange;  
+    }
+}
+

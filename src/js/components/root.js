@@ -1,36 +1,25 @@
 const React = require('react');
-const { HashRouter, Link, Switch, Route, Redirect } = require('react-router-dom');
-const { createBrowserHistory } = require('history');
+const ReactRedux = require('react-redux');
+const {HashRouter, Route} = require('react-router-dom');
 
-const routeInfo = require('../route-info');
-const Home = require('./home');
-const LoginForm = require('./login-form');
-const RegisterForm = require('./register-form');
+const history = require('../history');
+const store = require('../store');
 
-const history = createBrowserHistory();
+const ContentRoot = require('./content-root');
 
 class Root extends React.Component 
 {
-  constructor(props)
-  {
-    super(props);
-    
-    this.state = {};
-  }
-
   render() 
   {
     return (
-      <HashRouter history={history}>
-        <Switch>
-          <Route path="/login" name="login" component={LoginForm} />
-          <Route path="/register" name="register" component={RegisterForm} />
-          <Route path="/" name="home" component={Home} />
-        </Switch>
-      </HashRouter>
+      <ReactRedux.Provider store={store}>
+        <HashRouter history={history}>
+          {/* wrap connected component in a Route to sensitive to navigation */}
+          <Route path="/" component={ContentRoot} />
+        </HashRouter>
+      </ReactRedux.Provider>
     );
   }
 }
-
 
 module.exports = Root;

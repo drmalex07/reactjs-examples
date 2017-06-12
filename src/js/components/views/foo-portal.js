@@ -1,7 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 
-var randomString = require('../helpers/random-string');
+var randomString = require('../util/random-string');
 
 // Note:
 // A portal is a component that represents a DOM subtree that we want to manage 
