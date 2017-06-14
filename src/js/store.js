@@ -6,9 +6,6 @@ const {routerMiddleware}  = require('react-router-redux');
 const rootReducer = require('./reducers/index');
 const history = require('./history');
 
-/* global process */
-const env = process.env.NODE_ENV || 'development';
-
 // Create and configure store
 
 var middleware = [
@@ -16,7 +13,8 @@ var middleware = [
   routerMiddleware(history), // intercept navigation actions
 ];
 
-if (env == 'development') {
+/* global process */
+if (process.env.NODE_ENV != 'production') {
   // The logger middleware should always be last
   middleware.push(ReduxLogger.default);
 }
