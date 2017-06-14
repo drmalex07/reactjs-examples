@@ -50,6 +50,7 @@ module.exports = function(grunt) {
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
             'isomorphic-fetch', 'lodash', 'rgbcolor',
+            'moment', 'moment/locale/el', 'moment/locale/es',
             'react', 'react-dom', 'prop-types',
           ]
         },
@@ -81,9 +82,12 @@ module.exports = function(grunt) {
       },
       'vendor-moment': {
         options: {
+          require: [
+            'moment', 'moment/locale/el', 'moment/locale/es',
+          ]
         },
         files: {
-          'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
+          'build/vendor/moment-localized.js': [],
         },
       },
     },

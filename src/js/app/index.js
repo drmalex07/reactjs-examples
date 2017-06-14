@@ -46,7 +46,7 @@ module.exports = function makeApp(conf)
 
   app.post('/login', passport.authenticate('local', { 
     successRedirect: '/',
-    failureRedirect: '/login', 
+    failureRedirect: '/login', // if null, it simply responds with 401 Unauthorized 
   }));
   
   app.post('/logout', function (req, res) {
@@ -54,9 +54,7 @@ module.exports = function makeApp(conf)
     res.redirect('/'); // or maybe redirect to a dedicated logged-out page
   });
 
-  app.get('/', function (req, res) {
-    res.redirect('/example.html');
-  });
+  app.get('/', (req, res) => res.redirect('/index.html'));
 
   app.get('/api/action/echo', function (req, res) {
     res.json({message: (req.query.message || null)});

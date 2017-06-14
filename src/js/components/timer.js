@@ -1,5 +1,6 @@
 const React = require('react');
 
+const moment = require('../moment-localized');
 
 const Seconds = ({seconds, highlighted}) => (
   <span 
@@ -20,9 +21,13 @@ class Timer extends React.Component
     this.state = {
       elapsed: 0,
       highlighted: false,
+      createdAt: moment().locale('el'),
     };
 
     this._resetTimer = this._resetTimer.bind(this);
+
+    console.info('This instance of <Timer> created at ' + 
+      this.state.createdAt.format('ddd D/MM/YYYY HH:mm:ss'));
   }
   
   componentDidMount()
