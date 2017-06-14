@@ -48,8 +48,9 @@ module.exports = function(grunt) {
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
             'fetch', 'lodash', 'immutable', 'rgbcolor', 'history', 'sprintf', 'url-search-params',
+            'moment', 'moment/locale/el', 'moment/locale/es', 'moment/locale/de',
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
-            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 
+            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 'react-redux', 
             'reactstrap', 'react-transition-group',
           ]
         },
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
           ],
           require: [
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
-            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 
+            'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 'react-redux',
             'reactstrap', 'react-transition-group',
           ],
         },
@@ -90,9 +91,12 @@ module.exports = function(grunt) {
       },
       'vendor-moment': {
         options: {
+          require: [
+            'moment', 'moment/locale/el', 'moment/locale/es', 'moment/locale/de',
+          ],
         },
         files: {
-          'build/vendor/moment-localized.js': ['src/js/moment-localized.js'],
+          'build/vendor/moment-localized.js': [],
         },
       },
     },
