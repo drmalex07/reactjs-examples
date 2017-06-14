@@ -1,5 +1,5 @@
 const React = require('react');
-const { Link, Switch, Route, Redirect } = require('react-router-dom');
+const {Link, Switch, Route, Redirect} = require('react-router-dom');
 
 const Header = require('./layout/header');
 const Sidebar = require('./layout/sidebar');
@@ -8,6 +8,7 @@ const Aside = require('./layout/aside');
 const Footer = require('./layout/footer');
 
 const routeInfo = require('../route-info');
+const {userPropType} = require('../common-prop-structs');
 
 const Dashboard = require('./views/dashboard');
 const Greeter = require('./views/greeter');
@@ -102,6 +103,7 @@ class Home extends React.Component
     return (
       <div className={cssClasses.join(' ')}>
         <Header
+          user={this.props.user}
           toggleSidebar={this._toggleSidebar}
           styleSidebar={this._styleSidebar}
           toggleAsideMenu={this._toggleAsideMenu}
@@ -126,5 +128,8 @@ class Home extends React.Component
   }
 }
 
+Home.propTypes = {
+  user: userPropType,
+};
 
 module.exports = Home;

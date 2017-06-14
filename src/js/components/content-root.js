@@ -5,6 +5,7 @@ const {Link, Switch, Route, Redirect} = require('react-router-dom');
 
 const history = require('../history');
 const routeInfo = require('../route-info');
+const {userPropType} = require('../common-prop-structs');
 
 const Home = require('./home');
 const LoginForm = require('./login-form');
@@ -37,18 +38,14 @@ class ContentRoot extends React.Component
       );
     } else {
       return (
-        <Route path="/" name="home" component={Home} />
+        <Route path="/" name="home" component={() => (<Home user={this.props.user} />)} />
       );
     }
   }
 }
 
 ContentRoot.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    givenName: PropTypes.string,
-  }),
+  user: userPropType
 };
 
 //

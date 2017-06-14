@@ -1,6 +1,14 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { Dropdown, DropdownMenu, DropdownItem } = require('reactstrap');
+const ReactRedux = require('react-redux');
+const {Dropdown, DropdownMenu, DropdownItem} = require('reactstrap');
+const {Link, NavLink} = require('react-router-dom');
+
+const {userPropType} = require('../../common-prop-structs');
+
+//
+// Presentational component
+//
 
 class Header extends React.Component 
 {
@@ -9,7 +17,7 @@ class Header extends React.Component
     super(props);
 
     this._toggleDropdown = this._toggleDropdown.bind(this);
-    
+
     this.state = {
       dropdownOpen: false,
     };
@@ -67,45 +75,36 @@ class Header extends React.Component
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this._toggleDropdown}>
               <button onClick={this._toggleDropdown} className="nav-link dropdown-toggle" data-toggle="dropdown" type="button" 
                   aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'https://github.com/identicons/drmalex07.png'} className="img-avatar" alt="admin@example.com"/>
-                <span className="d-md-down-none">admin</span>
+                <img src={'https://github.com/identicons/drmalex07.png'} className="img-avatar" 
+                  alt={this.props.user.username}
+                 />
+                <span className="d-md-down-none">{this.props.user.username}</span>
               </button>
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center">
-                  <strong>Account</strong>
+                  <strong>{'Notifications'}</strong>
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-bell-o"></i> Updates<span className="badge badge-info">42</span>
+                <DropdownItem className="btn">
+                  <i className="fa fa-envelope-o"></i>&nbsp;{'Messages'}<span className="badge badge-success">42</span>
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-envelope-o"></i> Messages<span className="badge badge-success">42</span>
+                <DropdownItem className="btn">
+                  <i className="fa fa-tasks"></i>&nbsp;{'Tasks'}<span className="badge badge-danger">42</span>
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-tasks"></i> Tasks<span className="badge badge-danger">42</span>
+                <DropdownItem className="btn">
+                  <i className="fa fa-comments"></i>&nbsp;{'Comments'}<span className="badge badge-warning">42</span>
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-comments"></i> Comments<span className="badge badge-warning">42</span>
-                </DropdownItem>
+                {/*<DropdownItem divider />*/}
                 <DropdownItem header className="text-center">
-                  <strong>Settings</strong></DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-user"></i> Profile
+                  <strong>{'Account'}</strong>
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-wrench"></i> Settings
+                <DropdownItem className="btn">
+                  <i className="fa fa-user"></i>&nbsp;{'Profile'}
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-usd"></i> Payments<span className="badge badge-default">42</span>
+                <DropdownItem className="btn">
+                  <i className="fa fa-wrench"></i>&nbsp;{'Settings'}
                 </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-file"></i> Projects<span className="badge badge-primary">42</span>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <i className="fa fa-shield"></i> Lock Account
-                </DropdownItem>
-                <DropdownItem>
-                  <i className="fa fa-lock"></i> Logout
+                <DropdownItem className="btn" onClick={this.props.logout}>
+                  <i className="fa fa-sign-out"></i>&nbsp;{'Logout'}
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -125,10 +124,29 @@ class Header extends React.Component
 }
 
 Header.propTypes = {
+  user: userPropType,
+  logout: PropTypes.func.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   styleSidebar: PropTypes.func.isRequired,
   toggleAsideMenu: PropTypes.func.isRequired,
   styleAsideMenu: PropTypes.func.isRequired,
 };
+
+
+//
+// Container component
+//
+
+const {logout} = require('../../actions/user');
+
+const mapStateToProps = (state, ownProps) => ({});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  logout: () => (
+    dispatch(logout())
+  ),
+}); 
+
+Header = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Header);
 
 module.exports = Header;
