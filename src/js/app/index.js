@@ -25,7 +25,7 @@ module.exports = function makeApp(conf)
   
   const sessionOpts = require('./configure-session')(session, conf.session);
   app.use(session(sessionOpts));
-  
+
   conf.docRoot.forEach((p) => {
     app.use(express.static(p, {maxAge: '1d'})); // serve static content
   });
@@ -52,16 +52,22 @@ module.exports = function makeApp(conf)
   // Define request handlers
   //
   
-  app.post('/login', 
-    passport.authenticate('local', {
-      failureRedirect: null, // respond with 401 Unauthorized
-    }), function (req, res) {
-      res.status(HttpStatus.NO_CONTENT).send(); // successfull!
+  app.post('/login', passport.authenticate('local'), function (req, res) {
+    // after a successful login, regenerate session (prevent session fixation)
+    var {passport} = req.session;
+    req.session.regenerate((err) => {
+      if (!err) {
+        // Copy data to new session (passport, shopping basket etc.)
+        Object.assign(req.session, {passport});
+      }
+      res.status(HttpStatus.NO_CONTENT).end();
     });
-
+  });
+  
   app.post('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/'); // or maybe redirect to a dedicated logged-out page
+    req.session.destroy(() => {
+      res.location('/').end();
+    });
   });
 
   app.get('/', (req, res) => res.redirect('/index.html'));
@@ -76,12 +82,12 @@ module.exports = function makeApp(conf)
 
   app.post('/api/action/user/profile/save', function (req, res) {
     if (req.user == null) {
-      res.status(HttpStatus.UNAUTHORIZED).send();
+      res.status(HttpStatus.UNAUTHORIZED).end();
       return;
     }
     var {username, email, givenName, familyName} = req.body;
     if (req.user.username != username) {
-      res.send(HttpStatus.FORBIDDEN).send();
+      res.send(HttpStatus.FORBIDDEN).end();
       return;
     }
     db.User.findById(username)
@@ -90,14 +96,14 @@ module.exports = function makeApp(conf)
         u.update({email, givenName, familyName}) 
       )
       .then(
-        (u) => res.status(HttpStatus.CREATED).send(),
+        (u) => res.status(HttpStatus.CREATED).end(),
         (err) => res.status(HttpStatus.METHOD_FAILED).send(err)
       );
   });
   
   app.get('/api/action/user/profile', function (req, res) {
     if (req.user == null)
-      res.status(HttpStatus.UNAUTHORIZED).send();
+      res.status(HttpStatus.UNAUTHORIZED).end();
     else
       res.json({user: req.user});
   });
