@@ -1,40 +1,25 @@
 const React = require('react');
+const {IntlProvider} = require('react-intl');
 
-var Greeter = require('./greeter');
-var TodoList = require('./todo-list');
-var Timer = require('./timer');
-var FooPortal = require('./foo-portal');
+var messages = require('../i18n/messages');
+
+var ContentRoot = require('./content-root');
 
 class Root extends React.Component
 {  
   render()
   {
+    var {name, locale} = this.props;
     return (
-      <div>
-        <section id='section-1'>
-          <h3>Section #1</h3>
-          <Greeter name={this.props.name} />
-          <Timer />
-        </section>
-        
-        <section id='section-2'>
-          <h3>Section #2</h3>
-          <FooPortal name={this.props.name}/>
-        </section>
-        
-        <section id='section-3'>
-          <h3>Section #3</h3>
-          <TodoList todos={[
-             {id: 1, text: 'Clean house'},
-             {id: 2, text: 'Drink beer'}]}
-           />
-        </section>
-      </div>
+      <IntlProvider locale={locale} messages={messages[locale]}>
+        <ContentRoot name={name} />
+      </IntlProvider>
     );
   }
 }
 
 Root.defaultProps  = {
+  locale: 'el',
   name: 'World',
 };
 

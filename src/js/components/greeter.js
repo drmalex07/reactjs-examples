@@ -1,4 +1,5 @@
 var React = require('react');
+var {FormattedMessage} = require('react-intl');
 
 // Note:
 // Extend React.PureComponent to update component based on shallow equality of props+state
@@ -13,8 +14,13 @@ class Greeter extends React.PureComponent {
   render() 
   {
     console.info('About to render <Greeter/>...');
-    var text = "Hello, " + this.props.name; 
-    return (<p>{text}</p>);
+    return (
+      <p>
+        <FormattedMessage 
+          id="greeting.welcome"
+          values={{name: this.props.name}}
+        />
+      </p>);
   }
 }
 
