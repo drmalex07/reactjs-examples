@@ -11,10 +11,14 @@ var getName = () => window.location.hash.substr(1);
 document.addEventListener("DOMContentLoaded", function () 
 {
   var rootEl = document.querySelector(rootSelector);
-  renderRoot(rootEl);
   
-  // Push initial state to store
-  store.dispatch(actions.updateName(getName()));
+  // Push preliminary actions to store, then render
+
+  Promise.resolve()
+    .then(() => store.dispatch(actions.updateName(getName())))
+    .then(() => store.dispatch(actions.changeLocale('en')))
+    .then(() => renderRoot(rootEl));
+
 });
 
 window.addEventListener('hashchange', function () 

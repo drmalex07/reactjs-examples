@@ -50,7 +50,9 @@ module.exports = function(grunt) {
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
             'isomorphic-fetch', 'lodash', 'rgbcolor',
-            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
+            'moment', 'moment/locale/el',
+            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux', 
+            'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el',
           ]
         },
         files: {
@@ -61,9 +63,10 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'isomorphic-fetch:fetch',
-            'lodash',
-            'rgbcolor',
-          ]
+          ],
+          require: [
+            'lodash', 'rgbcolor', 'flat', 'intl-messageformat',
+          ],
         },
         files: {
           'build/vendor/util.js': []
@@ -72,7 +75,8 @@ module.exports = function(grunt) {
       'vendor-react': {
         options: {
           require: [
-            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
+            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux', 
+            'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el',
           ],
         },
         files: {
@@ -81,9 +85,12 @@ module.exports = function(grunt) {
       },
       'vendor-moment': {
         options: {
+          require: [
+            'moment', 'moment/locale/el',
+          ],
         },
         files: {
-          'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
+          'build/vendor/moment-localized.js': [],
         },
       },
     },

@@ -1,5 +1,7 @@
 const React = require('react');
 const ReactRedux = require('react-redux');
+const {FormattedMessage} = require('react-intl');
+
 
 //
 // Define presentational component
@@ -14,8 +16,12 @@ class Greeter extends React.PureComponent {
 
   render() 
   {
-    var text = "Hello, " + this.props.name; 
-    return (<p>{text}</p>);
+    var {name} = this.props;
+    return (
+      <p>
+        <FormattedMessage id="greeting.welcome" values={{name}} />
+      </p>
+    );
   }
 }
 
