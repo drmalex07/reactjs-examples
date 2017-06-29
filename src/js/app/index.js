@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 
+const _ = require('lodash');
+
 module.exports = function makeApp(conf)
 {
   const env = conf.env;
@@ -72,6 +74,20 @@ module.exports = function makeApp(conf)
       user: req.user || null,
       visits: req.session.counter,
     });
+  });
+  
+  var messages = new Map([
+    ['en', require('../i18n/en/messages.json')],
+    ['el', require('../i18n/el/messages.json')],
+  ]);
+
+  app.get('/api/action/get-messages', function (req, res) {
+    var locale = req.query.locale;
+    if (!_.isEmpty(locale) && messages.has(locale)) {
+      res.json(messages.get(locale));
+    } else {
+      res.status(404).send();
+    }
   });
 
   return app;

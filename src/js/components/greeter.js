@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactRedux = require('react-redux');
+const {FormattedMessage} = require('react-intl');
 
 const actions = require('../actions');
 
@@ -16,10 +17,12 @@ class Greeter extends React.PureComponent {
 
   render() 
   {
-    var text = "Hello, " + this.props.name; 
+    var {name} = this.props;
     return (
       <div>
-        <p>{text}</p>
+        <p>
+          <FormattedMessage id="greeting.welcome" values={{name}} />
+        </p>
         <p>
           {/* An example of navigating via Redux action */}
           <button onClick={this.props.navigateToHome}>{'Navigate (via Redux action) to home'}</button>

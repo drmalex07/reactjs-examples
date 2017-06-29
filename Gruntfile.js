@@ -49,9 +49,11 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'isomorphic-fetch', 'lodash', 'rgbcolor', 'history', 'immutable',
-            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
+            'isomorphic-fetch', 'history', 'immutable', 'lodash', 'rgbcolor',
+            'moment', 'moment/locale/el',
+            'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux', 
             'react-router-dom', 'react-router-redux',
+            'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el',
           ]
         },
         files: {
@@ -62,11 +64,11 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'isomorphic-fetch:fetch',
-            'lodash',
-            'immutable',
-            'history',
-            'rgbcolor',
-          ]
+          ],
+          require: [
+            'lodash', 'history', 'immutable',
+            'rgbcolor', 'flat', 'intl-messageformat',
+          ],
         },
         files: {
           'build/vendor/util.js': []
@@ -77,6 +79,7 @@ module.exports = function(grunt) {
           require: [
             'react', 'react-dom', 'prop-types', 'redux', 'redux-logger', 'redux-thunk', 'react-redux',
             'react-router-dom', 'react-router-redux',
+            'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el',
           ],
         },
         files: {
@@ -85,9 +88,12 @@ module.exports = function(grunt) {
       },
       'vendor-moment': {
         options: {
+          require: [
+            'moment', 'moment/locale/el',
+          ],
         },
         files: {
-          'build/vendor/moment-localized.js': ['vendor/js/moment-localized.js'],
+          'build/vendor/moment-localized.js': [],
         },
       },
     },

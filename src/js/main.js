@@ -1,4 +1,6 @@
 var {renderRoot} = require('./root');
+var store = require('./store');
+var actions = require('./actions');
 
 var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
@@ -7,5 +9,11 @@ var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 document.addEventListener("DOMContentLoaded", function ()
 {
   var rootEl = document.querySelector(rootSelector);
-  renderRoot(rootEl);
+  
+  // Push preliminary actions to store, then render
+
+  Promise.resolve()
+    .then(() => store.dispatch(actions.changeLocale('en')))
+    .then(() => renderRoot(rootEl));
+
 });
