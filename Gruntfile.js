@@ -47,11 +47,12 @@ module.exports = function(grunt) {
           // Exclude the modules below from being packaged into the main JS file:
           // The following will be resolved globally (shim) or via earlier vendor includes
           external: [
-            'fetch', 'lodash', 'immutable', 'rgbcolor', 'history', 'sprintf', 'url-search-params',
+            'fetch', 'lodash', 'immutable', 'rgbcolor', 'history', 'sprintf', 'url-search-params', 'flat',
             'moment', 'moment/locale/el', 'moment/locale/es', 'moment/locale/de',
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
             'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 'react-redux', 
             'reactstrap', 'react-transition-group',
+            'intl-messageformat', 'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el'
           ]
         },
         files: {
@@ -62,13 +63,17 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'isomorphic-fetch:fetch',
+          ],
+          require: [
             'url-search-params',
+            'intl-messageformat',
             'lodash',
             'history',
             'immutable',
             'rgbcolor',
             'sprintf',
-          ]
+            'flat',
+          ],
         },
         files: {
           'build/vendor/util.js': []
@@ -83,6 +88,7 @@ module.exports = function(grunt) {
             'react', 'react-dom', 'prop-types', 'react-router-dom', 
             'redux', 'redux-logger', 'redux-thunk', 'react-router-redux', 'react-redux',
             'reactstrap', 'react-transition-group',
+            'react-intl', 'react-intl/locale-data/en', 'react-intl/locale-data/el',
           ],
         },
         files: {

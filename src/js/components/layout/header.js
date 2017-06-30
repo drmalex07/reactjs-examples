@@ -3,8 +3,11 @@ const PropTypes = require('prop-types');
 const ReactRedux = require('react-redux');
 const {Dropdown, DropdownMenu, DropdownItem} = require('reactstrap');
 const {Link, NavLink} = require('react-router-dom');
+const {FormattedMessage} = require('react-intl');
 
 const {userPropType} = require('../../common-prop-structs');
+
+const SelectLanguage = require('../helpers/select-language');
 
 //
 // Presentational component
@@ -50,34 +53,37 @@ class Header extends React.Component
           </li>       
           {/* left-aligned top navbar items */} 
           <li className="nav-item px-3">
-            <a className="nav-link" href="#/dashboard">Dashboard</a>
+            <a className="nav-link" href="#/dashboard">
+              <FormattedMessage id="links.dashboard" />
+            </a>
           </li>
           <li className="nav-item px-3">
-            <a className="nav-link" href="#/users">Users</a>
+            <a className="nav-link" href="#/users">
+              <FormattedMessage id="links.users" />
+            </a>
           </li>
           <li className="nav-item px-3">
-            <a className="nav-link" href="#/settings">Settings</a>
+            <a className="nav-link" href="#/settings">
+              <FormattedMessage id="links.settings" />
+            </a>
           </li>
         </ul>
 
         {/* right-aligned menu items */}
         <ul className="nav navbar-nav ml-auto">
           <li className="nav-item d-md-down-none">
-            <a className="nav-link" href="#"><i className="icon-bell"></i><span className="badge badge-pill badge-danger">5</span></a>
+            <a className="nav-link" href="#">
+              <i className="icon-bell"></i><span className="badge badge-pill badge-info">5</span>
+            </a>
           </li>
           <li className="nav-item d-md-down-none">
-            <a className="nav-link" href="#"><i className="icon-list"></i></a>
-          </li>
-          <li className="nav-item d-md-down-none">
-            <a className="nav-link" href="#"><i className="icon-location-pin"></i></a>
+            <SelectLanguage />
           </li>
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this._toggleDropdown}>
               <button onClick={this._toggleDropdown} className="nav-link dropdown-toggle" data-toggle="dropdown" type="button" 
                   aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'https://github.com/identicons/drmalex07.png'} className="img-avatar" 
-                  alt={this.props.user.username}
-                 />
+                <img src={'https://github.com/identicons/drmalex07.png'} className="img-avatar" alt={this.props.user.username} />
                 <span className="d-md-down-none">{this.props.user.username}</span>
               </button>
               <DropdownMenu className="dropdown-menu-right">

@@ -2,7 +2,7 @@ const React = require('react');
 const ReactRedux = require('react-redux');
 const PropTypes = require('prop-types');
 const {Link, NavLink} = require('react-router-dom');
-
+const {FormattedMessage} = require('react-intl');
 
 //
 // Presentational component
@@ -49,8 +49,10 @@ class LoginForm extends React.Component
                 
                 <div className="card p-4">
                   <div className="card-block">
-                    <h1>{'Login'}</h1>
-                    <p className="text-muted">{'Sign into your account'}</p>
+                    <h1><FormattedMessage id="login.title" /></h1>
+                    <p className="text-muted">
+                      <FormattedMessage id="login.subtitle" />
+                    </p>
                     <div className="input-group mb-3">
                       <span className="input-group-addon"><i className="icon-user"></i></span>
                       <input type="text" className="form-control" placeholder="username"
@@ -68,12 +70,12 @@ class LoginForm extends React.Component
                     <div className="row">
                       <div className="col-6">
                         <button type="button" className="btn btn-primary px-4" onClick={this._submit}>
-                          {'Login'}
+                          <FormattedMessage id="login.login" />
                         </button>
                       </div>
                       <div className="col-6 text-right">
                         <NavLink className="btn px-0" activeClassName="active" to="/reset-password">
-                          {'Forgot password?'}
+                          <FormattedMessage id="login.forgot-password" />
                         </NavLink>
                       </div>
                     </div>
@@ -83,10 +85,10 @@ class LoginForm extends React.Component
                 <div className="card card-inverse card-primary py-5 d-md-down-none">
                   <div className="card-block text-center">
                     <div>
-                      <h2>{'Sign up'}</h2>
+                      <h2><FormattedMessage id="register.title"/></h2>
                       <p>{'Register for a new account'}</p>
                       <NavLink className="btn btn-primary active mt-3" to="/register">
-                        {'Register!'}
+                        <FormattedMessage id="register.register" />
                       </NavLink>
                     </div>
                   </div>

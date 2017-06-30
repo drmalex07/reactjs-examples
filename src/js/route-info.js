@@ -9,6 +9,9 @@ const routes = new Map([
   ['/greet', {
     name: 'greeter', title: 'Greeter',
   }],
+  ['/settings', {
+    name: 'settings', title: 'Settings'
+  }]
 ]);
 
 module.exports = routes;

@@ -1,5 +1,6 @@
 const React = require('react');
 const {Link, Switch, Route, Redirect} = require('react-router-dom');
+const {Container} = require('reactstrap');
 
 const Header = require('./layout/header');
 const Sidebar = require('./layout/sidebar');
@@ -12,6 +13,7 @@ const {userPropType} = require('../common-prop-structs');
 
 const Dashboard = require('./views/dashboard');
 const Greeter = require('./views/greeter');
+const SettingsForm = require('./views/settings-form');
 
 
 /////////////////////////////////////////////////////////////////
@@ -113,12 +115,13 @@ class Home extends React.Component
           <Route path="/" component={Sidebar} />
           <div className="main">
             <Route path="/" component={Breadcrumb} />
-            <div className="container-fluid">
+            <Container fluid>
               <Switch>
                 <Route path="/greet" name={routeInfo.get('/greet').title} component={Greeter}/>
                 <Route path="/dashboard" name={routeInfo.get('/dashboard').title} component={Dashboard}/>
+                <Route path="/settings" name={routeInfo.get('/settings').title} component={SettingsForm}/>
               </Switch>
-            </div>
+            </Container>
           </div>
           <Aside />
         </div>

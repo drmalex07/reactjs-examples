@@ -1,20 +1,25 @@
 const store = require('./store');
 const {refreshProfile} = require('./actions/user');
+const {changeLocale} = require('./actions/i18n');
 const {renderRoot} = require('./root');
 
 var rootSelector = document.currentScript.getAttribute('data-root') || '#root';
 
 // Bind top-level event handlers
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () 
+{
   var rootEl = document.querySelector(rootSelector);
-  var _renderRoot = renderRoot.bind(window, rootEl);
-  
+  var locale = "en";
+
   // Chain preliminary actions before initial rendering
-  store.dispatch(refreshProfile())
-    .then(null, (err) => console.info('Cannot refresh user profile'))
-    .then(_renderRoot);
-  //_renderRoot();
+  
+  Promise.resolve()
+    .then(() => store.dispatch(changeLocale(locale)))
+    .then(() => 
+      store.dispatch(refreshProfile())
+        .then(null, (err) => console.info('Cannot refresh user profile')))
+    .then(() => renderRoot(rootEl));
 });
 
 

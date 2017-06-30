@@ -2,6 +2,15 @@ const mirrorToPath = require('./util/path-mirror.js');
 
 module.exports = mirrorToPath({
   
+  locale: {
+    SET_LOCALE: null,
+  },
+  
+  i18n: {
+    REQUEST_MESSAGES: null,
+    LOAD_MESSAGES: null,
+  },
+
   config: {
     REQUEST_CONFIGURATION: null,
     LOAD_CONFIGURATION: null,

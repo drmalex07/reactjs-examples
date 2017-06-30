@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -52,6 +53,20 @@ module.exports = function makeApp(conf)
   // Define request handlers
   //
   
+  app.get('/', (req, res) => res.redirect('/index.html'));
+  
+  // Echo
+
+  app.get('/api/action/echo', function (req, res) {
+    res.json({message: (req.query.message || null)});
+  });
+ 
+  app.post('/api/action/echo', function (req, res) {
+    res.json({message: (req.body.message || null)});
+  });
+
+  // Login/Logout
+
   app.post('/login', passport.authenticate('local'), function (req, res) {
     // after a successful login, regenerate session (prevent session fixation)
     var {passport} = req.session;
@@ -70,15 +85,7 @@ module.exports = function makeApp(conf)
     });
   });
 
-  app.get('/', (req, res) => res.redirect('/index.html'));
-
-  app.get('/api/action/echo', function (req, res) {
-    res.json({message: (req.query.message || null)});
-  });
- 
-  app.post('/api/action/echo', function (req, res) {
-    res.json({message: (req.body.message || null)});
-  });
+  // User profile
 
   app.post('/api/action/user/profile/save', function (req, res) {
     if (req.user == null) {
@@ -106,6 +113,27 @@ module.exports = function makeApp(conf)
       res.status(HttpStatus.UNAUTHORIZED).end();
     else
       res.json({user: req.user});
+  });
+
+  // I18n 
+
+  const i18nMessages = require('../i18n/messages');
+
+  app.get('/api/action/get-messages', function (req, res) {
+    var locale = req.query.locale;
+    var messages = null;
+    if (!_.isEmpty(locale)) {
+      messages = i18nMessages.get(locale);
+      if (messages == null) {
+        // try using a simpler language code (eg "el" instead of "el-GR")
+        let m = /^([a-z][a-z])[-]([A-Z][A-Z])$/.exec(locale);
+        messages = !_.isEmpty(m)? i18nMessages.get(m[1]) : null;
+      }
+    }
+    if (messages == null)
+      res.status(404).send();
+    else
+      res.json(messages);
   });
 
   return app;
